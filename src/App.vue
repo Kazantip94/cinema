@@ -1,32 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <component :is="layout">
+      <router-view/>
+    </component>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import EmptyLayout from '@/layouts/EmptyLayout'
+import MainLayout from '@/layouts/MainLayout'
+export default {
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || 'empty') + '-layout'
     }
+  },
+  components: {
+    EmptyLayout, MainLayout
   }
 }
+</script>
+
+
+<style lang="scss">
+@import 'assets/index.css';
+
+@import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
+@import '~admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css';
+@import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
+@import '~admin-lte/plugins/jqvmap/jqvmap.min.css';
+@import '~admin-lte/dist/css/adminlte.min.css';
+@import '~admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css';
+@import '~admin-lte/plugins/daterangepicker/daterangepicker.css';
+@import '~admin-lte/plugins/summernote/summernote-bs4.min.css';
 </style>
