@@ -23,8 +23,6 @@ export default {
 
 
 <style lang="scss">
-@import 'assets/index.css';
-
 @import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
 @import '~admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css';
 @import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
