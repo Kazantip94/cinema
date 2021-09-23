@@ -1,23 +1,28 @@
 <template>
     <div class="banner">
         <div class="banner-item">
-            <i class="fas fa-window-close"></i>
+            <i class="fas fa-window-close close"></i>
             <img class="img-upper" src="" alt="">
-            <div class="div">
+            <div class="select-image">
                 <img 
                 :src="avatar" 
                 alt="Image" 
-                height="150">
-                <input type="file" @change="GetImage">
+                height="150"
+                width="100%"
+                >
+                <label class="btn btn-outline-secondary btn-block">
+                    <span class="add">Добавить</span>
+                    <input type="file" accept="image/*" hidden="hidden" @change="GetImage">
+                </label>
             </div>
-            <div class="inputs-group">
-                <div class="inputs">
-                    <label for="url">URL:</label>
-                    <input/>
+            <div class="input-group input-group-sm mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">URL</span>
+                    <input type="text" aria-label="Current URL" class="form-control">
                 </div>
-                <div class="inputs">
-                    <label for="url">Текст:</label>
-                    <input />
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Текст</span>
+                    <input type="text" aria-label="Current URL" class="form-control">
                 </div>
             </div>
         </div>     
@@ -56,5 +61,9 @@ export default ({
     .banner-item {
         display: flex;
         flex-direction: column;
+        border: 1px solid silver;
+    }
+    .close {
+        margin-left: 175px;
     }
 </style>

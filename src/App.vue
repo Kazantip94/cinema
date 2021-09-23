@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <component :is="layout">
-      <router-view/>
-    </component>
+    <Navbar />
+    <Sidebar />
+    <router-view/>
   </div>
 </template>
 
 <script>
-import EmptyLayout from '@/layouts/EmptyLayout'
-import MainLayout from '@/layouts/MainLayout'
+import Navbar from '@/components/app/Navbar'
+import Sidebar from '@/components/app/Sidebar'
+
 export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || 'empty') + '-layout'
-    }
-  },
+
   components: {
-    EmptyLayout, MainLayout
+    Navbar, Sidebar
   }
 }
 </script>

@@ -10,9 +10,10 @@
               <button class="btn btn-outline-secondary on-off">ON/OFF</button>
             </div>
             <BannerUpper />
+            <button class="btn btn-outline-secondary btn-add">Добавить фото</button>
             <div class="bottom">
               <span class="speed">Скорость вращения</span>
-              <select class="form-control">
+              <select class="form-control time">
                 <option>5с</option>
               </select>
               <button class="btn btn-outline-secondary btns">Cохранить</button>
@@ -62,7 +63,7 @@ export default ({
 
 <style lang="scss">
   .banner-upper {
-    height: 500px;
+    height: 550px;
     border: 1px solid black;
     margin: 50px 50px;
     border-radius: 15px;
@@ -87,7 +88,12 @@ export default ({
   .btns {
     margin-left: 70px;
   }
-  .form-control {
+  .btn-add {
+    
+    width: 200px;
+    margin: 10px 0 0 15px;
+  }
+  .time {
     width: 70px;
   }
   .banner-back {
