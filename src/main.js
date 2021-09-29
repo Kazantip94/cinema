@@ -5,8 +5,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import { initializeApp } from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/database'
+import { getDatabase } from "firebase/database"
+// import { getAuth, onAuthStateChanged } from "firebase/auth"
+
 
 
 
@@ -42,9 +43,21 @@ const firebaseConfig = {
   measurementId: "G-4XNEY7YF7J"
 }
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
+console.log(database)
 
-
+// let apps
+// const auth = getAuth()
+// onAuthStateChanged(auth, () => {
+//   if (!apps) {
+//     apps = new Vue({
+//       router,
+//       store,
+//       render: h => h(App)
+//     }).$mount('#app')
+//   } 
+// })
 
 new Vue({
   router,
@@ -52,5 +65,3 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-
-app()

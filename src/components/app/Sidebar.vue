@@ -29,11 +29,11 @@ export default {
       {title: 'Баннера/Слайдеры', url: '/categories'},
       {title: 'Фильмы', url: '/planning'},
       {title: 'Кинотеатры', url: '/record'},
-      {title: 'Новости', url: '/categories'},
-      {title: 'Акции', url: '/categories'},
-      {title: 'Страницы', url: '/categories'},
-      {title: 'Пользователи', url: '/categories'},
-      {title: 'Рассылка', url: '/categories'}
+      // {title: 'Новости', url: '/categories'},
+      // {title: 'Акции', url: '/categories'},
+      // {title: 'Страницы', url: '/categories'},
+      // {title: 'Пользователи', url: '/categories'},
+      // {title: 'Рассылка', url: '/categories'}
     ]
   })
 }

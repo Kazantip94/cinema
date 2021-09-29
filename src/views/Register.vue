@@ -61,7 +61,7 @@
         <p>
           <label>
             <input type="checkbox" v-model="agree" />
-            <span>С правилами согласен</span>
+            <span class="policy">С правилами согласен</span>
           </label>
         </p>
       </div>
@@ -75,10 +75,10 @@
           </button>
         </div>
 
-        <span class="center">
+        <p class="center">
           Уже есть аккаунт?
           <router-link to="/login">Войти</router-link>
-        </span>
+        </p>
       </div>
     </form>
   </div>
@@ -130,5 +130,8 @@ export default ({
 }
 .error {
   color: red;
+}
+.policy {
+  margin-left: 10px;
 }
 </style>
