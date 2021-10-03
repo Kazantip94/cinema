@@ -30,8 +30,10 @@
 
 export default ({
  methods: {
-   logout() {
-     this.$router.push('/')
+   async logout() {
+     await this.$store.dispatch('logout')
+     // this.$router.push('/')
+     console.log('logout')
    }
  }
 })

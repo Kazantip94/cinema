@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -15,3 +15,5 @@ const firebaseConfig = {
 initializeApp(firebaseConfig)
 
 export const signIn = signInWithEmailAndPassword
+export const register = createUserWithEmailAndPassword
+export const signOutUser = signOut
