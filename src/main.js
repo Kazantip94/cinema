@@ -4,9 +4,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-import { initializeApp } from 'firebase/app'
-import { getDatabase } from "firebase/database"
-// import { getAuth, onAuthStateChanged } from "firebase/auth"
+import firebase from './plugins/firebase'
 
 
 
@@ -33,31 +31,8 @@ Vue.config.productionTip = false
 
 Vue.use(Vuelidate)
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCI3xAYflwEpJx3JhRrpI2StnbsWVQg3xk",
-  authDomain: "vue-cinema-crm.firebaseapp.com",
-  projectId: "vue-cinema-crm",
-  storageBucket: "vue-cinema-crm.appspot.com",
-  messagingSenderId: "771012724253",
-  appId: "1:771012724253:web:a47fbe390287825d6a68f4",
-  measurementId: "G-4XNEY7YF7J"
-}
 
-const app = initializeApp(firebaseConfig)
-const database = getDatabase(app)
-console.log(database)
 
-// let apps
-// const auth = getAuth()
-// onAuthStateChanged(auth, () => {
-//   if (!apps) {
-//     apps = new Vue({
-//       router,
-//       store,
-//       render: h => h(App)
-//     }).$mount('#app')
-//   } 
-// })
 
 new Vue({
   router,
