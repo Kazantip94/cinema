@@ -114,7 +114,7 @@ export default ({
         name: this.name
       }
       console.log(formData)
-      this.router.push('/')
+      // this.router.push('/')
     }
   }
 })

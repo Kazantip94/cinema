@@ -1,4 +1,5 @@
 import {initializeApp} from 'firebase/app'
+import { getFirestore } from "firebase/firestore"
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
 
 
@@ -12,8 +13,11 @@ const firebaseConfig = {
     measurementId: "G-4XNEY7YF7J"
   }
   
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 
 export const signIn = signInWithEmailAndPassword
 export const register = createUserWithEmailAndPassword
 export const signOutUser = signOut
+export const db = getFirestore(app)
+
+
