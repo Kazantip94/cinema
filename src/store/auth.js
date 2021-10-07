@@ -1,7 +1,6 @@
 
-import { FirebaseError } from '@firebase/util'
 import { getAuth } from 'firebase/auth'
-import { signIn, signOutUser, register } from '../plugins/firebase'
+import { signIn, signOutUser, register, db } from '../plugins/firebase'
 
 
 const auth = getAuth()
@@ -27,14 +26,12 @@ export default {
             try {
                 // eslint-disable-next-line
                 await register(auth, email, password)
-                // console.log(response.user)
                 const uid = await dispatch('getUid')
-                console.log(uid.user)
-                await firebase.database().ref(`/users/${uid}/info`).set({
+                // console.log(uid)
+                await db.database().ref(`/users/${uid}/info`).set({
                     bill: 10000,
                     name
                 })
-
 
             }catch (e) {
                 console.log(e)
@@ -43,7 +40,8 @@ export default {
         },
         getUid(userCredential) {
             const user = userCredential.user
-            console.log(user)
+            // const user = firebase.auth().currentUser
+            // console.log(user)
             return user ? user.uid : null
         }
     }
