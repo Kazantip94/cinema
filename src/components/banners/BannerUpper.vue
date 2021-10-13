@@ -1,31 +1,60 @@
 <template>
-    <div class="banner">
-        <div class="banner-item">
-            <i class="fas fa-window-close close"></i>
-            <img class="img-upper" src="" alt="">
-            <div class="select-image">
-                <img 
-                :src="avatar" 
-                alt="Image" 
-                height="150"
-                width="100%"
-                >
-                <label class="btn btn-outline-secondary btn-block">
-                    <span class="add">Добавить</span>
-                    <input type="file" accept="image/*" hidden="hidden" @change="GetImage">
-                </label>
-            </div>
+<div class="card text-center border-primary m-2 p-2 shadow">
+        <button
+            type="button"
+            class="close card-header text-right p-1"
+            aria-label="Close"
+            @click="$emit('remove-card', localCard)"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="card-img-top">
+            <img
+                :src="localCard.url"
+                class="card-img-top img-thumbnail"
+                alt=""
+            />
+        </div>
+
+        <div class="card-body">
+            <label class="btn btn-secondary px-5">
+                Загрузить
+                <i class="fas fa-file ml-1"></i>
+                <input
+                    type="file"
+                    class="custom-file-input"
+                    accept="image/*"
+                    hidden
+                    @change="uploadImage"
+                />
+            </label>
+
             <div class="input-group input-group-sm mt-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text">URL</span>
-                    <input type="text" aria-label="Current URL" class="form-control">
                 </div>
+                <input
+                    class="form-control"
+                    type="text"
+                    :value="localCard.url"
+                    aria-label="Current URL"
+                />
+            </div>
+
+            <div v-if="localCard.text" class="input-group input-group-sm mt-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Текст</span>
-                    <input type="text" aria-label="Current URL" class="form-control">
                 </div>
+                <input
+                    v-model="localCard.text"
+                    class="form-control"
+                    type="text"
+                    placeholder="описание"
+                    @change="$emit('change-card', localCard)"
+                />
             </div>
-        </div>     
+        </div>
     </div>
 </template>
 
@@ -34,36 +63,41 @@
 
 export default ({
     name: 'BannerUpper',
-    data () {
+    data: function () {
         return {
-            avatar: null
+            localCard: this.card,
         }
     },
+    props: {
+        card: {
+            type: Object,
+            required: true,
+            dafault: {},
+        },
+        showText: { type: Boolean, default: true, required: false },
+    },
     methods: {
-        GetImage(e) {
-            let image = e.target.files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(image);
-            reader.onload = e => {
-                this.avatar = e.target.result
-            }
-        }
-    }
+        uploadImage: async function (event, path = "images/") {
+            event.stopPropagation();
+            event.preventDefault();
+            const file = event.target.files[0];
+            if (!file) return false;
+            this.localCard.url = await this.$store.dispatch("uploadToStorage", {
+                file,
+                path,
+            });
+            this.$emit("change-card", this.localCard);
+        },
+    },
 })
 </script>
 
-<style lang="scss">
-    .banner {
-        width: 200px;
-        height: 300px;
-        margin: 0 15px;
+<style scoped lang="scss">
+.card {
+    max-width: 250px;
+    min-width: 250px;
+    & .card-img-top {
+        height: 150px;
     }
-    .banner-item {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid silver;
-    }
-    .close {
-        margin-left: 175px;
-    }
+}
 </style>

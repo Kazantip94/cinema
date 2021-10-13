@@ -1,6 +1,7 @@
 
 import { getAuth } from 'firebase/auth'
-import { signIn, signOutUser, register, db } from '../plugins/firebase'
+import { getDatabase, ref, set } from "firebase/database"
+import { signIn, signOutUser, register  } from '../plugins/firebase'
 
 
 const auth = getAuth()
@@ -11,8 +12,7 @@ export default {
         // eslint-disable-next-line
         async login ({dispatch, commit}, {email, password}) {
             try {
-                const response = await signIn(auth, email, password)
-                console.log(response.user)
+                await signIn(auth, email, password)
             } catch (e) {
                 console.log(e)
                 throw e
@@ -27,21 +27,19 @@ export default {
                 // eslint-disable-next-line
                 await register(auth, email, password)
                 const uid = await dispatch('getUid')
-                // console.log(uid)
-                await db.database().ref(`/users/${uid}/info`).set({
-                    bill: 10000,
-                    name
-                })
-
+                const db = getDatabase()
+                console.log(db)
+                await set(ref(db, `/users/${uid}/info`), {
+                    bill: 1000,
+                    usename: name    
+                  })
             }catch (e) {
                 console.log(e)
                 throw e
             }
         },
-        getUid(userCredential) {
-            const user = userCredential.user
-            // const user = firebase.auth().currentUser
-            // console.log(user)
+        getUid() {
+            const user = auth.currentUser
             return user ? user.uid : null
         }
     }
