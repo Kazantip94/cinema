@@ -30,28 +30,6 @@ export default {
 //                 })
 //         },
 
-//         async writeToDatabase(_state, { payload, path }) {
-//             try {
-//                 return await firebase.database().ref(path).set(payload)
-//             } catch (error) {
-//                 console.log(`Error writing to database: ${error}`)
-//                 throw error
-//             }
-//         },
 
-        // async readFromDatabase(_state, path) {
-        //     try {
-        //         // return (
-        //         //     await firebase.database().ref(path).once("value")  
-        //         // ).val()
-        //         const starCountRef = ref(db, path)
-        //         onValue(starCountRef, (snapshot) => {
-        //             snapshot.val()  
-        //         });
-        //     } catch (error) {
-        //         console.log(`Error reading from database: ${error}`)
-        //         throw error
-        //     }
-        // },
     },
 }

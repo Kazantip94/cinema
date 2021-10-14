@@ -19,7 +19,7 @@
 
         <div class="card-body">
             <label class="btn btn-secondary px-5">
-                Загрузить
+                Добавить
                 <i class="fas fa-file ml-1"></i>
                 <input
                     type="file"
