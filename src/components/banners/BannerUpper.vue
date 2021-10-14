@@ -1,5 +1,5 @@
 <template>
-<div class="card text-center border-primary m-2 p-2 shadow">
+<div class="card text-center border-primary m-2 p-2 ">
         <button
             type="button"
             class="close card-header text-right p-1"
@@ -20,7 +20,6 @@
         <div class="card-body">
             <label class="btn btn-secondary px-5">
                 Добавить
-                <i class="fas fa-file ml-1"></i>
                 <input
                     type="file"
                     class="custom-file-input"

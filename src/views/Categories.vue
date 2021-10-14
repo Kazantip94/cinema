@@ -8,7 +8,6 @@
                 <div class="row p-3">
                     <small class="col-6 text-muted">Pазмер 1000x190</small>
                     <div class="col-6 text-right">
-                            
                     </div>
                 </div>
                 <div class="row pl-3">
@@ -49,12 +48,7 @@
                     </div>
 
                     <div class="col">
-                        <!-- <base-button
-                            class="btn btn-lg w-50"
-                            @click="saveBanners"
-                        >
-                            Сохранить
-                        </base-button> -->
+                        <button class="btn"></button>                       
                     </div>
                 </div>
             </div>
@@ -74,7 +68,6 @@ export default ({
   data() {
         return {
             banners: [],
-            actions: [],
             times: [" 5", "15", "30"],
         }
     },

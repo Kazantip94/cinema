@@ -1,46 +1,45 @@
-
-import { getAuth } from 'firebase/auth'
-import { getDatabase, ref, set } from "firebase/database"
-import { signIn, signOutUser, register  } from '../plugins/firebase'
-
-
-const auth = getAuth()
-
+import firebase from "firebase/app"
 
 export default {
     actions: {
-        // eslint-disable-next-line
-        async login ({dispatch, commit}, {email, password}) {
+        async login({ dispatch }, { email, password }) {
             try {
-                await signIn(auth, email, password)
+                await firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email, password)
+                const uid = await dispatch("getUid")
+                console.log("Logged to firebase as...", uid)
             } catch (e) {
                 console.log(e)
-                throw e
             }
         },
-        async logout () {
-            await signOutUser(auth)
-        },
-        // eslint-disable-next-line
-        async register({dispatch}, {email, password, name}) {
+
+        async register({ dispatch }, { email, password}) {
             try {
-                // eslint-disable-next-line
-                await register(auth, email, password)
-                const uid = await dispatch('getUid')
-                const db = getDatabase()
-                console.log(db)
-                await set(ref(db, `/users/${uid}/info`), {
-                    bill: 1000,
-                    usename: name    
-                  })
-            }catch (e) {
+                await firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(email, password)
+                const uid = await dispatch("getUid")
+                // await firebase.database().ref(`/users/${uid}/info`).set({
+                //     name
+                // })
+                console.log(uid)
+            } catch (e) {
                 console.log(e)
-                throw e
             }
         },
+
         getUid() {
-            const user = auth.currentUser
+            const user = firebase.auth().currentUser
             return user ? user.uid : null
-        }
-    }
+        },
+
+        async logout() {
+            try {
+                await firebase.auth().signOut()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+    },
 }
