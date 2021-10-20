@@ -29,37 +29,37 @@ export default new Router({
     {
       path: '/categories',
       name: 'categories',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/Categories.vue')
     },
     {
       path: '/detail/:id',
       name: 'detail',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/Detail.vue')
     },
     {
       path: '/history',
       name: 'history',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/History.vue')
     },
     {
       path: '/planning',
       name: 'planning',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/Planning.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/Profile.vue')
     },
     {
       path: '/record',
       name: 'record',
-      meta: {layout: 'main'},
+      meta: {layout: 'admin'},
       component: () => import('../views/Record.vue')
     }
   ]

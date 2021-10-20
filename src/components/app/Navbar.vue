@@ -9,18 +9,13 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="#" class="navbar-brand">
-          <img src="#" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        </a>
-      </li>
       <li class="nav-item dropdown">
-            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" ref="dropdown">Меню</a>
+
+            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" ref="dropdown">{{name}}</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
               <li><a href="#" class="dropdown-item" @click.prevent="logout">Выйти</a></li>
             </ul>
           </li>
-
     </ul>
   </nav>
 </template>
@@ -32,8 +27,13 @@ export default ({
  methods: {
    async logout() {
      await this.$store.dispatch('logout')
-    //  this.$router.push('/')
+     this.$router.push('/')
      console.log('logout')
+   }
+ },
+ computed: {
+   name() {
+     return this.$store.getters.info.name
    }
  }
 })

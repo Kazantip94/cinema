@@ -39,5 +39,11 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+  // body, .main-sidebar {
+  //   height: 1000px
+  // }
+</style>
+
 
 
