@@ -76,7 +76,7 @@
                         <div class="form-check m-3">
                             <label class="form-check-label"
                                 ><input
-                                    v-model="bigBanner.bannerType"
+                                    v-model="midBanner.bannerType"
                                     class="form-check-input"
                                     type="radio"
                                     name="radio1"
@@ -87,7 +87,7 @@
                         <div class="form-check m-3">
                             <label class="form-check-label"
                                 ><input
-                                    v-model="bigBanner.bannerType"
+                                    v-model="midBanner.bannerType"
                                     class="form-check-input"
                                     type="radio"
                                     name="radio1"
@@ -101,9 +101,9 @@
 
                 <div class="col-9">
                     <BackBunner
-                        :card="bigBanner"
-                        @remove-banner="removeBigBanner"
-                        @change-card="changeBigBanner"
+                        :card="midBanner"
+                        @remove-banner="removeMidBanner"
+                        @change-card="changeMidBanner"
                     />
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     <small class="col-6 text-muted">Pазмер 1000x190</small>
                     <div class="col-6 text-right">
                         <Switcher
-                            v-model="settings.actionsSwitch"
+                            v-model="settings.bottomSwitch"
                         ></Switcher>
                     </div>
                 </div>
@@ -127,17 +127,17 @@
                     <div class="col-10">
                         <div class="card-group p-3">
                             <BannerUpper
-                                v-for="action in actions"
+                                v-for="action in bottom"
                                 :key="action.id"
                                 :card="action"
-                                @remove-card="removeAction"
+                                @remove-card="removeBottom"
                             />
                         </div>
                     </div>
                 </div>
                 <button
                     class="btn-lg btn-outline-info btn-block shadow m-3"
-                    @click="addAction"
+                    @click="addBottom"
                 >
                     Добавить
                 </button>
@@ -147,7 +147,7 @@
                             Скорость вращения:
                         </div>
                         <select
-                            v-model="settings.actionsRotationSpeed"
+                            v-model="settings.bottomRotationSpeed"
                             class="form-control shadow mx-3 col-3"
                         >
                             <option
@@ -162,7 +162,7 @@
                     <div class="col">
                         <Button
                             class="btn btn-lg w-50"
-                            @click="saveActions"
+                            @click="saveBottom"
                         >
                             Сохранить
                         </Button>
@@ -194,23 +194,23 @@ export default ({
             settings: {
                 bannersSwitch: true,
                 bannersRotationSpeed: "1",
-                actionsSwitch: true,
-                actionsRotationSpeed: "1",
+                bottomSwitch: true,
+                bottomRotationSpeed: "1",
             },
             banners: [],
-            bigBanner: {
+            midBanner: {
                 url: CONFIG.PICTURE_PLUG_URL,
                 bannerType: "Фото на фоне",
             },
-            actions: [],
+            bottom: [],
             times: ["5", "15", "30"],
         };
     },
     beforeRouteEnter(to, from, next) {
         next((vm) => {
             vm.fetchBanners();
-            vm.fetchActions();
-            vm.fetchBigBanner();
+            vm.fetchBottom();
+            vm.fetchMidBanner();
             vm.loadSettings();
         });
     },
@@ -266,49 +266,49 @@ export default ({
             );
             if (result) this.banners = result;
         },
-        async changeBigBanner() {
-            const path = "/bigban";
-            const payload = this.bigBanner;
+        async changeMidBanner() {
+            const path = "/midban";
+            const payload = this.midBanner;
             await this.$store.dispatch("writeToDatabase", { payload, path });
         },
-        async removeBigBanner() {
-            this.bigBanner.url = CONFIG.PICTURE_PLUG_URL;
-            this.bigBanner.bannerType = "Просто фон";
+        async removeMidBanner() {
+            this.midBanner.url = CONFIG.PICTURE_PLUG_URL;
+            this.midBanner.bannerType = "Просто фон";
         },
-        async fetchBigBanner() {
+        async fetchMidBanner() {
             const result = await this.$store.dispatch(
                 "readFromDatabase",
-                "/bigban"
+                "/midban"
             );
             if (result) {
-                this.bigBanner.url = result.url;
-                this.bigBanner.bannerType = result.bannerType;
+                this.midBanner.url = result.url;
+                this.midBanner.bannerType = result.bannerType;
             }
         },
-        addAction() {
+        addBottom() {
             const action = {
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             };
-            this.actions.push(action);
+            this.bottom.push(action);
         },
-        async removeAction(target) {
-            this.actions = this.actions.filter((element) => element != target);
+        async removeBottom(target) {
+            this.bottom = this.bottom.filter((element) => element != target);
             if (target.url == CONFIG.PICTURE_PLUG_URL) return;
             await this.$store.dispatch("removeFromStorage", target.url);
         },
-        async saveActions() {
-            const payload = this.actions;
-            const path = "/bannersActions";
+        async saveBottom() {
+            const payload = this.bottom;
+            const path = "/bannersBottom";
             await this.$store.dispatch("writeToDatabase", { payload, path });
             // this.$successMessage("Данные сохранены");
         },
-        async fetchActions() {
+        async fetchBottom() {
             const result = await this.$store.dispatch(
                 "readFromDatabase",
-                "/bannersActions"
+                "/bannersBottom"
             );
-            if (result) this.actions = result;
+            if (result) this.bottom = result;
         },
     }
   
