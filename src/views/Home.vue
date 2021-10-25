@@ -2,7 +2,7 @@
   <div>
     <a href="/login">LOGIN</a>
     <br>
-    <a href="/categories">CATEGORIES</a>
+    <a href="/banners">Banners</a>
   </div>
 </template>
 

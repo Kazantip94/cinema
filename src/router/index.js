@@ -27,40 +27,58 @@ export default new Router({
       component: () => import('../views/Home.vue')
     },
     {
-      path: '/categories',
-      name: 'categories',
+      path: '/banners',
+      name: 'banners',
       meta: {layout: 'admin'},
-      component: () => import('../views/Categories.vue')
+      component: () => import('../views/admin/Banners.vue')
     },
     {
-      path: '/detail/:id',
-      name: 'detail',
+      path: '/cinema',
+      name: 'cinema',
       meta: {layout: 'admin'},
-      component: () => import('../views/Detail.vue')
+      component: () => import('../views/admin/Cinema.vue')
     },
     {
-      path: '/history',
-      name: 'history',
+      path: '/films',
+      name: 'films',
       meta: {layout: 'admin'},
-      component: () => import('../views/History.vue')
+      component: () => import('../views/admin/Films.vue')
     },
     {
-      path: '/planning',
-      name: 'planning',
+      path: '/news',
+      name: 'news',
       meta: {layout: 'admin'},
-      component: () => import('../views/Planning.vue')
+      component: () => import('../views/admin/News.vue')
     },
     {
-      path: '/profile',
-      name: 'profile',
+      path: '/newsletter',
+      name: 'newsletter',
       meta: {layout: 'admin'},
-      component: () => import('../views/Profile.vue')
+      component: () => import('../views/admin/Newsletter.vue')
     },
     {
-      path: '/record',
-      name: 'record',
+      path: '/pages',
+      name: 'pages',
       meta: {layout: 'admin'},
-      component: () => import('../views/Record.vue')
+      component: () => import('../views/admin/Pages.vue')
+    },
+    {
+      path: '/statistics',
+      name: 'statistics',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/Statistics.vue')
+    },
+    {
+      path: '/stock',
+      name: 'stock',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/Stock.vue')
+    },
+    {
+      path: '/users',
+      name: 'users',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/Users.vue')
     }
   ]
 })

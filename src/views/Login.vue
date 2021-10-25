@@ -86,7 +86,7 @@ export default ({
       }
       try {
         await this.$store.dispatch('login', formData)
-        this.$router.push({name: 'categories'})
+        this.$router.push({name: 'banners'})
       } catch(e) {console.log('error')}
     }
   }

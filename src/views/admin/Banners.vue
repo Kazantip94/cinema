@@ -1,5 +1,5 @@
 <template>
-    <div class="content-wrapper">
+    <div>
         <div class="card mt-3">
             <div class="card-header text-center font-weight-bold">
                 На главной верх
@@ -175,11 +175,11 @@
 
 
 <script>
-import BannerUpper from '../components/banners/BannerUpper'
+import BannerUpper from '@/components/banners/BannerUpper'
 import CONFIG from "@/config.js"
-import Switcher from "../components/banners/Switcher"
-import Button from "../components/banners/Button"
-import BackBunner from "../components/banners/BackBunner"
+import Switcher from "@/components/banners/Switcher"
+import Button from "@/components/banners/Button"
+import BackBunner from "@/components/banners/BackBunner"
 
 export default ({
 
@@ -267,7 +267,7 @@ export default ({
             if (result) this.banners = result;
         },
         async changeMidBanner() {
-            const path = "/midban";
+            const path = "/midbanners";
             const payload = this.midBanner;
             await this.$store.dispatch("writeToDatabase", { payload, path });
         },
@@ -278,7 +278,7 @@ export default ({
         async fetchMidBanner() {
             const result = await this.$store.dispatch(
                 "readFromDatabase",
-                "/midban"
+                "/midbanners"
             );
             if (result) {
                 this.midBanner.url = result.url;
