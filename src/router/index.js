@@ -45,6 +45,12 @@ export default new Router({
       component: () => import('../views/admin/Films.vue')
     },
     {
+      path: '/filmInfo',
+      name: 'filmInfo',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/FilmInfo.vue')
+    },
+    {
       path: '/news',
       name: 'news',
       meta: {layout: 'admin'},

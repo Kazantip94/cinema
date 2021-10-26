@@ -88,18 +88,45 @@ export default {
             url: CONFIG.PICTURE_PLUG_URL
           },
           trailerLink: "http:/rezka",
-          filmType: "[2D]"
+          filmType: "[2D]",
+          SEO: {
+                    url: "/img/uploadPicture.jpg",
+                    urlUA: "/img/uploadPicture.jpg",
+                    title: "/img/uploadPicture.jpg",
+                    titleUA: "/img/uploadPicture.jpg",
+                    keywords: "key words here",
+                    keywordsUA: "key words here",
+                    description: "/img/uploadPicture.jpg",
+                    descriptionUA: "/img/uploadPicture.jpg",
+                }
         }
         this.films.push(newFilm)
         this.saveToDatabase()
       },
+    editFilm(film) {
+      const index = this.films.findIndex((item) => item == film);
+      this.$router.push({
+          name: "filmInfo",
+          params: { filmIndex: index }
+      })
+    },
     async removeFilm(film) {
+      if (!window.confirm("Удалить фильм?")) return
       this.removeFromStorage(film.baseImg)
-      if(film.img) {
-        film.img.forEach((item) => this.removeFromStorage(item)
-        )}
+      // if (film.img) {
+      //   film.img.forEach((item) =>
+      //   this.removeFromStorage(item)
+      //   )
+      // }
       this.films = this.films.filter((item) => item != film)
-      this.saveToDatabase().then(() => this.$successMessage("Фильм удален"))
+      this.saveToDatabase()
+            // this.saveToDatabase().then(() =>
+            //     this.$successMessage("Фильм удален")
+            // )
+    },
+    async removeFromStorage(picture) {
+      if (picture.url == CONFIG.PICTURE_PLUG_URL) return
+      await this.$store.dispatch("removeFromStorage", picture.url)
     },
     async saveToDatabase() {
       const payload = this.films
