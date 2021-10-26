@@ -1,7 +1,7 @@
 <template>
     <div ref="form">
             <div class="card-body">
-                <div class="card card-primary card-outline card-outline-tabs mt-5">
+                <div class="card card-primary card-outline card-outline-tabs">
                     <div class="card-header">
                         <ul 
                         class="nav nav-tabs"
@@ -34,16 +34,15 @@
                             class="tab-pane fade show active"
                             role="tabpanel"
                             >
-                                <div class="input-group mb-3">
+                                <div class="input-group input-group-sm mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"
-                                            >Название</span>
+                                        <span class="input-group-text">Название</span>
                                     </div>
                                     <input
                                         
                                         type="text"
                                         class="form-control"
-                                        placeholder="название фильма"
+                                        placeholder="Название фильма"
                                     />
                                 </div>
                                 <div class="input-group input-group-sm mb-3">
