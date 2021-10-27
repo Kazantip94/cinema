@@ -70,12 +70,12 @@
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <BannerUpper 
+                                            <!-- <BannerUpper 
                                             v-for="pic in currentFilm.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removeFilmPicture"
-                                            />
+                                            /> -->
                                         </div>
                                         <button 
                                         @click.prevent="addFilmPicture"
@@ -255,12 +255,12 @@
                                     <div class="card-header">Галерея зображень</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <BannerUpper 
+                                            <!-- <BannerUpper 
                                             v-for="pic in currentFilm.imgUA"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removeFilmPictureUA"
-                                            />
+                                            /> -->
                                         </div>
                                         <button 
                                         @click.prevent="addFilmPictureUA"
@@ -409,13 +409,13 @@
 <script>
 import CONFIG from "@/config.js"
 import BackBunner from "@/components/banners/BackBunner"
-import BannerUpper from '@/components/banners/BannerUpper'
+// import BannerUpper from '@/components/banners/BannerUpper'
 
 export default ({
   name: "film",
   components: {
       BackBunner,
-      BannerUpper
+    //   BannerUpper
   },
   props: {
         id: {
