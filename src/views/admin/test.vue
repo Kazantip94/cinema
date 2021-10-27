@@ -542,3 +542,101 @@
         </div>
     </div>
 </template>
+
+<script>
+import CONFIG from "@/config.js";
+import PictureCard from "@/components/PictureCard.vue";
+import KinoCard from "@/components/KinoCard.vue";
+export default {
+    components: { PictureCard, KinoCard },
+    props: {
+        filmIndex: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+    },
+    data() {
+        return {
+            currentFilm: null,
+        };
+    },
+    // beforeRouteLeave(to, from, next) {
+    //     const answer = window.confirm("Выйти? Есть несохраненные данные.");
+    //     if (answer) {
+    //         next();
+    //     } else {
+    //         next(false);
+    //     }
+    // },
+    beforeRouteEnter(to, from, next) {
+        next((vm) => vm.loadFilmsElementFromDatabase());
+    },
+    methods: {
+        async loadFilmsElementFromDatabase() {
+            const path = `/films/${this.filmIndex}`;
+            const result = await this.$store.dispatch("readFromDatabase", path);
+            if (result) this.currentFilm = result;
+        },
+        submitFilmDetails() {
+            this.saveFilmsElementToDatabase().then(() => {
+                this.$successMessage("Фильм записан");
+            });
+            this.$router.push({
+                name: "Films",
+            });
+        },
+        async saveFilmsElementToDatabase() {
+            const payload = this.currentFilm;
+            const path = `/films/${this.filmIndex}`;
+            return await this.$store.dispatch("writeToDatabase", {
+                payload,
+                path,
+            });
+        },
+        mainPictureChanged(target) {
+            this.currentFilm.mainPic.url = target.url;
+        },
+        mainPictureChangedUA(target) {
+            this.currentFilm.mainPicUA.url = target.url;
+        },
+        removeMainPic: async function () {
+            this.currentFilm.mainPic.url = CONFIG.PICTURE_PLUG_URL;
+        },
+        removeMainPicUA: async function () {
+            this.currentFilm.mainPicUA.url = CONFIG.PICTURE_PLUG_URL;
+        },
+        resetCurrentFilm() {
+            // maybe clear some garbage
+            this.$router.go();
+            this.$successMessage("Базовая версия восстановлена");
+        },
+        addFilmPicture() {
+            this.currentFilm.pics.push({
+                id: `${Date.now()}${Math.random()}`,
+                url: CONFIG.PICTURE_PLUG_URL,
+            });
+        },
+        addFilmPictureUA() {
+            this.currentFilm.picsUA.push({
+                id: `${Date.now()}${Math.random()}`,
+                url: CONFIG.PICTURE_PLUG_URL,
+            });
+        },
+        removeFilmPicture: async function (target) {
+            this.currentFilm.pics = this.currentFilm.pics.filter(
+                (element) => element != target
+            );
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return;
+            await this.$store.dispatch("removeFromStorage", target.url);
+        },
+        removeFilmPictureUA: async function (target) {
+            this.currentFilm.picsUA = this.currentFilm.picsUA.filter(
+                (element) => element != target
+            );
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return;
+            await this.$store.dispatch("removeFromStorage", target.url);
+        },
+    },
+};
+</script>
