@@ -39,14 +39,34 @@ export default new Router({
       component: () => import('../views/admin/Cinema.vue')
     },
     {
+      path: '/cinemaDetails',
+      name: 'cinemaDetails',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/CinemaDetails.vue')
+    },
+    {
+      path: '/cinemaHallDetails',
+      name: 'cinemaHallDetails',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/CinemaHallDetails.vue')
+    },
+    {
       path: '/films',
       name: 'films',
       meta: {layout: 'admin'},
       component: () => import('../views/admin/Films.vue')
     },
+    // {
+    //   path: '/filmInfo/:id',
+    //   props: true,
+    //   name: 'filmInfo',
+    //   meta: {layout: 'admin'},
+    //   component: () => import('../views/admin/FilmInfo.vue')
+    // },
     {
-      path: '/filmInfo',
-      name: 'filmInfo',
+      path: '/films/:id',
+      props: true,
+      name: 'film',
       meta: {layout: 'admin'},
       component: () => import('../views/admin/FilmInfo.vue')
     },

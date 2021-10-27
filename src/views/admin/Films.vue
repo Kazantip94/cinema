@@ -7,11 +7,11 @@
       </div>
       <div class="card-body card-group">
         <CardFilms 
-          v-for="film in filmsCurrent"
-          :key="film.id"
-          :film="film"
-          @film-clicked="editFilm(film)"
-          @remove-film="removeFilm"
+        v-for="(film, index) in filmsCurrent"
+        :key="index"
+        :index="index"
+        :film="film"  
+        @remove-film="removeFilm"
         />
       </div>
       <button
@@ -28,11 +28,11 @@
       </div>
       <div class="card-body card-group">
         <CardFilms 
-          v-for="film in filmsSoon"
-          :key="film.id"
-          :film="film"
-          @film-clicked="editFilm(film)"
-          @remove-film="removeFilm"
+        v-for="(film, index) in filmsSoon"
+        :key="index"
+        :index="index"
+        :film="film"  
+        @remove-film="removeFilm"
         />
       </div>
       <button
@@ -78,7 +78,7 @@ export default {
         const newFilm = {
           id: `${Date.now()}${Math.random()}`,
           ListofСurrentFilms: currentFilms,
-          title: "Новый фильм",
+          title: "",
           titleUA: "",
           descriprion: "",
           descriprionUA: "",
@@ -114,50 +114,43 @@ export default {
         this.films.push(newFilm)
         this.saveToDatabase()
       },
-      editFilm(film) {
-        const index = this.films.findIndex((item) => item == film)
-        this.$router.push({
-            name: "filmInfo",
-            params: { filmIndex: index }
-        })
-        console.log(index)
-      },
-      async removeFilm(film) {
-        if (!window.confirm("Удалить фильм?")) return
-        this.removeFromStorage(film.baseImg)
-        this.removeFromStorage(film.baseImgUA)
-        // if (film.img) {
-        //   film.img.forEach((item) =>
-        //     this.removeFromStorage(item)
-        //   )
-        // }
-        //  if (film.imgUA) {
-        //   film.img.forEach((item) =>
-        //     this.removeFromStorage(item)
-        //   )
-        // }
-        this.films = this.films.filter((item) => item != film)
-        this.saveToDatabase()
-              // this.saveToDatabase().then(() =>
-              //     this.$successMessage("Фильм удален")
-              // )
-      },
-      async removeFromStorage(picture) {
-        if (picture.url == CONFIG.PICTURE_PLUG_URL) return
-        await this.$store.dispatch("removeFromStorage", picture.url)
-      },
-      async saveToDatabase() {
-        const payload = this.films
-        const path = "/films"
-        return await this.$store.dispatch("writeToDatabase", { payload, path })
-      },
-      async loadToDatabase() {
-        const result = await this.$store.dispatch(
-          "readFromDatabase",
-          "/films"
-          )
-        if (result) this.films = result
+
+    async removeFilm(film) {
+      if (!window.confirm("Удалить фильм?")) return
+      this.removeFromStorage(film.baseImg)
+      this.removeFromStorage(film.baseImgUA)
+      if (film.img) {
+        film.img.forEach((item) =>
+          this.removeFromStorage(item)
+        )
       }
+       if (film.imgUA) {
+        film.img.forEach((item) =>
+          this.removeFromStorage(item)
+        )
+      }
+      this.films = this.films.filter((item) => item != film)
+      this.saveToDatabase()
+            // this.saveToDatabase().then(() =>
+            //     this.$successMessage("Фильм удален")
+            // )
+    },
+    async removeFromStorage(picture) {
+      if (picture.url == CONFIG.PICTURE_PLUG_URL) return
+      await this.$store.dispatch("removeFromStorage", picture.url)
+    },
+    async saveToDatabase() {
+      const payload = this.films
+      const path = "/films"
+      return await this.$store.dispatch("writeToDatabase", { payload, path })
+    },
+    async loadToDatabase() {
+      const result = await this.$store.dispatch(
+        "readFromDatabase",
+         "/films"
+         )
+      if (result) this.films = result
+    }
   }  
 }
 </script>

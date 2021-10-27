@@ -7,12 +7,12 @@
             class="card-img-top img-responsive"
             :src="film.baseImg.url"
             alt=""
-            @click="$emit('film-clicked', film)"
+            @click="edit"
         />
 
         <h5
             class="card-footer text-center"
-            @click="$emit('film-clicked', film)"
+            @click="edit"
         >
             {{ film.title | cut }}
         </h5>
@@ -35,7 +35,20 @@ export default {
             type: Object,
             default: null,
         },
+        index: {
+            type: Number,
+            required: true
+        }
     },
+    methods: {
+        edit() {
+            
+            this.$router.push({
+                name: "film",
+                params: { id: this.index }
+            })
+        }
+    }
 };
 </script>
 

@@ -59,23 +59,23 @@
                                 <div class="card">
                                     <div class="card-header">Главная картинка</div>
                                     <div class="card-body">
-                                        <!-- <BackBunner
+                                        <BackBunner
                                         :card="currentFilm.baseImg"
                                         @change-card="mainPictureChanged"
                                         @remove-banner="removeMainPic"
-                                         /> -->
+                                         />
                                     </div>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <!-- <BannerUpper 
+                                            <BannerUpper 
                                             v-for="pic in currentFilm.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removeFilmPicture"
-                                            /> -->
+                                            />
                                         </div>
                                         <button 
                                         @click.prevent="addFilmPicture"
@@ -214,7 +214,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- <div
+                            <div
                             id="custom-tabs-two-ua"
                             class="tab-pane fade"
                             role="tabpanel"
@@ -398,7 +398,7 @@
                                     Повернути базову версію
                                     </button>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -408,17 +408,17 @@
 
 <script>
 import CONFIG from "@/config.js"
-// import BackBunner from "@/components/banners/BackBunner"
-// import BannerUpper from '@/components/banners/BannerUpper'
+import BackBunner from "@/components/banners/BackBunner"
+import BannerUpper from '@/components/banners/BannerUpper'
 
 export default ({
-  name: "filmInfo",
+  name: "film",
   components: {
-    //   BackBunner,
-    //   BannerUpper
+      BackBunner,
+      BannerUpper
   },
   props: {
-        filmIndex: {
+        id: {
             type: Number,
             required: true,
             default: 0,
@@ -434,7 +434,7 @@ export default ({
     },
     methods: {
         async loadFilmsElementFromDatabase() {
-            const path = `/films/${this.filmIndex}`
+            const path = `/films/${this.id}`
             const result = await this.$store.dispatch("readFromDatabase", path)
             if (result) this.currentFilm = result
         },
@@ -449,7 +449,7 @@ export default ({
         },
         async saveFilmsElementToDatabase() {
             const payload = this.currentFilm
-            const path = `/films/${this.filmIndex}`
+            const path = `/films/${this.id}`
             return await this.$store.dispatch("writeToDatabase", {
                 payload,
                 path,
