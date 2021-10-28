@@ -10,10 +10,7 @@
             @click="edit"
         />
 
-        <h5
-            class="card-footer text-center"
-            @click="edit"
-        >
+        <h5 class="card-footer text-center">
             {{ film.title | cut }}
         </h5>
     </div>
@@ -42,7 +39,6 @@ export default {
     },
     methods: {
         edit() {
-            
             this.$router.push({
                 name: "film",
                 params: { id: this.index }

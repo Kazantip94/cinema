@@ -116,24 +116,21 @@ export default {
       },
 
     async removeFilm(film) {
-      if (!window.confirm("Удалить фильм?")) return
       this.removeFromStorage(film.baseImg)
       this.removeFromStorage(film.baseImgUA)
-      if (film.img) {
-        film.img.forEach((item) =>
-          this.removeFromStorage(item)
-        )
-      }
-       if (film.imgUA) {
-        film.img.forEach((item) =>
-          this.removeFromStorage(item)
-        )
-      }
+      // if (film.img) {
+      //   film.img.forEach((item) =>
+      //     this.removeFromStorage(item)
+      //   )
+      // }
+      //  if (film.imgUA) {
+      //   film.img.forEach((item) =>
+      //     this.removeFromStorage(item)
+      //   )
+      // }
       this.films = this.films.filter((item) => item != film)
       this.saveToDatabase()
-            // this.saveToDatabase().then(() =>
-            //     this.$successMessage("Фильм удален")
-            // )
+            
     },
     async removeFromStorage(picture) {
       if (picture.url == CONFIG.PICTURE_PLUG_URL) return

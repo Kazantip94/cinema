@@ -76,11 +76,12 @@ export default ({
         showText: { type: Boolean, default: true, required: false },
     },
     methods: {
-        uploadImage: async function (event, path = "images/") {
+        uploadImage: async function (event, path="/images") {
             event.stopPropagation();
             event.preventDefault();
             const file = event.target.files[0];
-            if (!file) return false;
+            if (!file) return false
+            
             this.localCard.url = await this.$store.dispatch("uploadToStorage", {
                 file,
                 path,
