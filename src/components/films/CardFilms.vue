@@ -1,5 +1,6 @@
 <template>
     <div class="card border shadow m-3">
+        {{index}}
         <button type="button" class="close card-header text-right pr-1">
             <span @click="$emit('remove-film', film)">&times;</span>
         </button>

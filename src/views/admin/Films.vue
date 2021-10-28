@@ -24,7 +24,7 @@
     </div>
     <div class="card">
       <div class="card-header text-center">
-        <h3>Список фильмов текущих</h3>
+        <h3>Список фильмов которые покажут скоро</h3>
       </div>
       <div class="card-body card-group">
         <CardFilms 
@@ -118,16 +118,6 @@ export default {
     async removeFilm(film) {
       this.removeFromStorage(film.baseImg)
       this.removeFromStorage(film.baseImgUA)
-      // if (film.img) {
-      //   film.img.forEach((item) =>
-      //     this.removeFromStorage(item)
-      //   )
-      // }
-      //  if (film.imgUA) {
-      //   film.img.forEach((item) =>
-      //     this.removeFromStorage(item)
-      //   )
-      // }
       this.films = this.films.filter((item) => item != film)
       this.saveToDatabase()
             

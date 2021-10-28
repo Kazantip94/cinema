@@ -52,7 +52,7 @@ export default new Router({
     //   component: () => import('../views/admin/FilmInfo.vue')
     // },
     {
-      path: '/films/:id',
+      path: '/film/:id',
       props: true,
       name: 'film',
       meta: {layout: 'admin'},
