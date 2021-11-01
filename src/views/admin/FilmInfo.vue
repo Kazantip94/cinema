@@ -34,7 +34,7 @@
                             class="tab-pane fade show active"
                             role="tabpanel"
                             >
-                                <div class="input-group input-group-sm mb-3">
+                                <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Название</span>
                                     </div>
@@ -45,7 +45,7 @@
                                         placeholder="Название фильма"
                                     />
                                 </div>
-                                <div class="input-group input-group-sm mb-3">
+                                <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Описание</span>
                                     </div>
@@ -89,7 +89,7 @@
                                         Ссылка на трейлер
                                     </div>
                                     <div class="card-body">
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
@@ -151,7 +151,7 @@
                                 <div class="card">
                                     <div class="card-header">SEO блок</div>
                                     <div class="card-body">
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
@@ -162,7 +162,7 @@
                                             placeholder="url"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Title</span>
                                             </div>
@@ -173,7 +173,7 @@
                                             placeholder="title"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
@@ -184,7 +184,7 @@
                                             placeholder="Keywords"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Description</span>
                                             </div>
@@ -219,7 +219,7 @@
                             class="tab-pane fade"
                             role="tabpanel"
                             >
-                                <div class="input-group input-group-sm mb-3">
+                                <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Назва</span>
                                     </div>
@@ -230,7 +230,7 @@
                                         placeholder="Назва фільму"
                                     />
                                 </div>
-                                <div class="input-group input-group-sm mb-3">
+                                <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Опис</span>
                                     </div>
@@ -274,7 +274,7 @@
                                         Посилання на трейлер
                                     </div>
                                     <div class="card-body">
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
@@ -336,7 +336,7 @@
                                 <div class="card">
                                     <div class="card-header">SEO блок</div>
                                     <div class="card-body">
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
@@ -347,7 +347,7 @@
                                             placeholder="url"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Title</span>
                                             </div>
@@ -358,7 +358,7 @@
                                             placeholder="title"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
@@ -369,7 +369,7 @@
                                             placeholder="Keywords"
                                             >
                                         </div>
-                                        <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Description</span>
                                             </div>

@@ -39,6 +39,20 @@ export default new Router({
       component: () => import('../views/admin/Cinema.vue')
     },
     {
+      path: '/cinema/:cinemaIndex',
+      props: true,
+      name: 'cinema-edit',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/CinemaEdit.vue')
+    },
+    {
+      path: '/cinema/:cinemaIndex/:hallIndex',
+      props: true,
+      name: 'cinema-hall',
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/CinemaEditHall.vue')
+    },
+    {
       path: '/films',
       name: 'films',
       meta: {layout: 'admin'},

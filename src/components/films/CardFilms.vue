@@ -1,6 +1,5 @@
 <template>
     <div class="card border shadow m-3">
-        {{index}}
         <button type="button" class="close card-header text-right pr-1">
             <span @click="$emit('remove-film', film)">&times;</span>
         </button>
@@ -8,10 +7,13 @@
             class="card-img-top img-responsive"
             :src="film.baseImg.url"
             alt=""
-            @click="edit"
+            @click="$emit('film-clicked', film)"
         />
 
-        <h5 class="card-footer text-center">
+        <h5
+            class="card-footer text-center"
+            @click="$emit('film-clicked', film)"
+        >
             {{ film.title | cut }}
         </h5>
     </div>
@@ -33,19 +35,7 @@ export default {
             type: Object,
             default: null,
         },
-        index: {
-            type: Number,
-            required: true
-        }
     },
-    methods: {
-        edit() {
-            this.$router.push({
-                name: "film",
-                params: { id: this.index }
-            })
-        }
-    }
 };
 </script>
 
