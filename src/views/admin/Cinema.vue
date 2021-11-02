@@ -44,7 +44,7 @@ export default ({
             const newCinema = {
                 id: `${Date.now()}${Math.random()}`,
                 title: "Новый кинотеатр",
-                titleUA: "",
+                titleUA: "Новий кінотеатр",
                 description: "",
                 descriptionUA: "",
                 conditions: "",
@@ -62,24 +62,24 @@ export default ({
                     url: CONFIG.PICTURE_PLUG_URL
                 },               
                 img: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        url: CONFIG.PICTURE_PLUG_URL,
-                    },
+                        {
+                            id: `${Date.now()}${Math.random()}`,
+                            url: CONFIG.PICTURE_PLUG_URL,
+                        },
                 ],
                 imgUA: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        url: CONFIG.PICTURE_PLUG_URL,
-                    },
+                        {
+                            id: `${Date.now()}${Math.random()}`,
+                            url: CONFIG.PICTURE_PLUG_URL,
+                        },
                 ],
                 halls: [
                     {
                         id: `${Date.now()}${Math.random()}`,
                         hallNumber: "",
                         date: Date.now(),
-                        description: "1",
-                        descriptionUA: "2",
+                        description: "",
+                        descriptionUA: "",
                         hallLayout: {
                             url: CONFIG.PICTURE_PLUG_URL
                         },
@@ -105,26 +105,26 @@ export default ({
                             },
                             ],
                         SEO: {
-                            url: "/img/uploadPicture.jpg",
-                            urlUA: "/img/uploadPicture.jpg",
-                            title: "/img/uploadPicture.jpg",
-                            titleUA: "/img/uploadPicture.jpg",
-                            keywords: "key words here",
-                            keywordsUA: "key words here",
-                            description: "/img/uploadPicture.jpg",
-                            descriptionUA: "/img/uploadPicture.jpg",
+                            url: "",
+                            urlUA: "",
+                            title: "",
+                            titleUA: "",
+                            keywords: "",
+                            keywordsUA: "",
+                            description: "",
+                            descriptionUA: "",
                         }
                     }
                 ],
                 SEO: {
-                    url: "/img/uploadPicture.jpg",
-                    urlUA: "/img/uploadPicture.jpg",
-                    title: "/img/uploadPicture.jpg",
-                    titleUA: "/img/uploadPicture.jpg",
-                    keywords: "key words here",
-                    keywordsUA: "key words here",
-                    description: "/img/uploadPicture.jpg",
-                    descriptionUA: "/img/uploadPicture.jpg",
+                    url: "",
+                    urlUA: "",
+                    title: "",
+                    titleUA: "",
+                    keywords: "",
+                    keywordsUA: "",
+                    description: "",
+                    descriptionUA: "",
                     },
             }
             this.cinemas.push(newCinema)
@@ -156,7 +156,7 @@ export default ({
                 "readFromDatabase",
                 "/cinema"
             )
-            if (result) this.cinemas = result;
+            if (result) this.cinemas = result
         },
         edit(cinema) {
             const index = this.cinemas.findIndex((item) => item == cinema)
@@ -165,7 +165,6 @@ export default ({
                 params: { cinemaIndex: index}
             })
         }
-    }
-    
+    }  
 })
 </script>

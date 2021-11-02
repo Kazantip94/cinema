@@ -69,22 +69,40 @@
                                 <div class="card">
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
-                                        BunnerUpper
-                                    </div>
+                                        <BackBunner 
+                                        :card="cinema.baseImg"
+                                        @change-card="changedLogo"
+                                        @remove-banner="removeLogo"
+                                        />
+                                    </div> 
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Фото верхнего баннера</div>
                                     <div class="card-body">
-                                        BunnerUpper
+                                        <BackBunner 
+                                        :card="cinema.banner"
+                                        @change-card="changedBanner"
+                                        @remove-banner="removeBanner"
+                                        />
                                     </div>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            BunnerUpper
+                                            <BannerUpper 
+                                            v-for="pic in cinema.img"
+                                            :key="pic.id"
+                                            :card="pic"
+                                            @remove-card="removePicture"
+                                            />
                                         </div>
-                                        <button class="btn btn-outline-info btn-block my-2">Добавить</button>
+                                        <button 
+                                        class="btn btn-outline-info btn-block my-2"
+                                        @click.prevent="addPicture"
+                                        >
+                                        Добавить
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="card">
@@ -110,13 +128,13 @@
                                                     <td>
                                                         <button
                                                         class="btn btn-info mx-3"
-                                                        @click="editItem(index)"
+                                                        @click="edit(index)"
                                                         >
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <button
                                                         class="btn btn-danger mx-3"
-                                                        @click="removeItem(hall)"
+                                                        @click="remove(hall)"
                                                         >
                                                             <i class="fas fa-trash"></i>
                                                         </button>
@@ -191,6 +209,13 @@
                                     >
                                         Сохранить и выйти
                                     </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-info btn-block btn-lg"
+                                        @click="back"
+                                    >
+                                        Вернутся
+                                    </button>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-two-ua" role="tabpanel">
@@ -232,22 +257,40 @@
                                 <div class="card">
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
-                                        BunnerUpper
+                                        <BackBunner 
+                                        :card="cinema.baseImgUA"
+                                        @change-card="changedLogoUA"
+                                        @remove-banner="removeLogoUA"
+                                        />
                                     </div>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Фото верхнього банера</div>
                                     <div class="card-body">
-                                        BunnerUpper
+                                        <BackBunner 
+                                        :card="cinema.bannerUA"
+                                        @change-card="changedBannerUA"
+                                        @remove-banner="removeBannerUA"
+                                        />
                                     </div>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            BunnerUpper
+                                            <BannerUpper 
+                                            v-for="pic in cinema.imgUA"
+                                            :key="pic.id"
+                                            :card="pic"
+                                            @remove-card="removePictureUA"
+                                            />
                                         </div>
-                                        <button class="btn btn-outline-info btn-block my-2">Додати</button>
+                                        <button 
+                                        class="btn btn-outline-info btn-block my-2"
+                                        @click.prevent="addPictureUA"
+                                        >
+                                        Додати
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="card">
@@ -354,6 +397,13 @@
                                     >
                                         Зберегти і вийти
                                     </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-info btn-block btn-lg"
+                                        @click="back"
+                                    >
+                                        Повернутись
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -365,9 +415,15 @@
 
 <script>
 import CONFIG from '@/config.js'
+import BackBunner from '@/components/banners/BackBunner.vue'
+import BannerUpper from '@/components/banners/BannerUpper.vue'
 
 export default ({
     name: 'cinema-edit',
+    components: {
+        BackBunner,
+        BannerUpper
+    },
     props: {
         cinemaIndex: {
             type: Number,
@@ -398,13 +454,38 @@ export default ({
         },
         async remove(target) {
             if (!window.confirm("Удалить?")) return
+            this.removeFromStorage(target.hallLayout)
+            this.removeFromStorage(target.hallLayoutUA)
+            this.removeFromStorage(target.banner)
+            this.removeFromStorage(target.bannerUA)
+            if (target.img) {
+                target.img.forEach((item) =>
+                    this.removeFromStorage(item)
+                )
+            }
+            if (target.imgUA) {
+                target.imgUA.forEach((item) =>
+                    this.removeFromStorage(item)
+                )
+            }
             this.cinema.halls = this.cinema.halls.filter((item) => item != target)
             this.save()
+        },
+        async removeFromStorage(picture) {
+            if (picture.url == CONFIG.PICTURE_PLUG_URL) return
+            await this.$store.dispatch("removeFromStorage", picture.url)
+        },
+        edit(index) {
+            this.save()
+            this.$router.push({
+                name: "cinema-hall",
+                params: { cinemaIndex: this.cinemaIndex, hallIndex: index },
+            })
         },
         add() {
             const newHall = {
                 id: `${Date.now()}${Math.random()}`,
-                hallNumber: "",
+                hallNumber: "#",
                 date: Date.now(),
                 description: "",
                 descriptionUA: "",
@@ -433,26 +514,80 @@ export default ({
                     },
                 ],
                 SEO: {
-                    url: "/img/uploadPicture.jpg",
-                    urlUA: "/img/uploadPicture.jpg",
-                    title: "/img/uploadPicture.jpg",
-                    titleUA: "/img/uploadPicture.jpg",
-                    keywords: "key words here",
-                    keywordsUA: "key words here",
-                    description: "/img/uploadPicture.jpg",
-                    descriptionUA: "/img/uploadPicture.jpg",
+                    url: "",
+                    urlUA: "",
+                    title: "",
+                    titleUA: "",
+                    keywords: "",
+                    keywordsUA: "",
+                    description: "",
+                    descriptionUA: "",
                 }
                     
             }
             this.cinema.halls.push(newHall)
             this.save()
         },
+        changedLogo(target) {
+            this.cinema.baseImg.url = target.url
+        },
+        changedLogoUA(target) {
+            this.cinema.baseImgUA.url = target.url
+        },
+        changedBanner(target) {
+            this.cinema.banner.url = target.url
+        },
+        changedBannerUA(target) {
+            this.cinema.bannerUA.url = target.url
+        },
+        removeLogo: async function () {
+            this.cinema.baseImg.url = CONFIG.PICTURE_PLUG_URL
+        },
+        removeLogoUA: async function () {
+            this.cinema.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
+        },
+        removeBanner: async function () {
+            this.cinema.banner.url = CONFIG.PICTURE_PLUG_URL
+        },
+        removeBannerUA: async function () {
+            this.cinema.bannerUA.url = CONFIG.PICTURE_PLUG_URL
+        },
+        addPicture() {
+            this.cinema.img.push({
+                id: `${Date.now()}${Math.random()}`,
+                url: CONFIG.PICTURE_PLUG_URL,
+            })
+        },
+        addPictureUA() {
+            this.cinema.imgUA.push({
+                id: `${Date.now()}${Math.random()}`,
+                url: CONFIG.PICTURE_PLUG_URL,
+            })
+        },
+        removePicture: async function (target) {
+            this.cinema.img = this.cinema.img.filter(
+                (element) => element != target
+            )
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return
+            await this.$store.dispatch("removeFromStorage", target.url)
+        },
+        removePictureUA: async function (target) {
+            this.cinema.imgUA = this.cinema.imgUA.filter(
+                (element) => element != target
+            )
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return
+            await this.$store.dispatch("removeFromStorage", target.url)
+        },
         submit() {
             this.save()
-            
             this.$router.push({
                 name: "cinema"
-            });
+            })
+        },
+        back() {
+            this.$router.push({
+                name: "cinema" 
+            })
         }
     }
     
