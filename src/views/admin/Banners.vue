@@ -254,10 +254,22 @@ export default ({
             if (index != -1) this.banners[index] = card;
         },
         async saveBanners() {
-            const payload = this.banners;
-            const path = "/banners";
-            await this.$store.dispatch("writeToDatabase", { payload, path });
-            // this.$successMessage("Данные сохранены");
+            const payload = this.banners
+            let path = "/banners"
+            this.$store.getters['getBannerImages'].forEach(async banner => {
+                const downloadUrl = await this.$store.dispatch("uploadToStorage", {
+                    file: banner.file,
+                    path: "/images/"
+                })
+                const found = payload.find(item => item.id == banner.id)
+                if(found) {
+                    found.url = downloadUrl
+                    await this.$store.dispatch("writeToDatabase", {payload: found, path })
+                }
+            })
+            this.$store.commit('clearBannerImages')
+            // await this.$store.dispatch("writeToDatabase", { payload, path })
+            
         },
         async fetchBanners() {
             const result = await this.$store.dispatch(

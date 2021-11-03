@@ -1,5 +1,5 @@
 <template>
-    <div v-if="currentFilm" ref="form">
+    <div v-if="current" ref="form">
             <div class="card-body">
                 <div class="card card-primary card-outline card-outline-tabs">
                     <div class="card-header">
@@ -39,7 +39,7 @@
                                         <span class="input-group-text">Название</span>
                                     </div>
                                     <input
-                                        v-model="currentFilm.title"
+                                        v-model="current.title"
                                         type="text"
                                         class="form-control"
                                         placeholder="Название фильма"
@@ -50,7 +50,7 @@
                                         <span class="input-group-text">Описание</span>
                                     </div>
                                     <textarea
-                                    v-model="currentFilm.description"
+                                    v-model="current.description"
                                     type="text"
                                     class="form-control"
                                     placeholder="Описание фильма"
@@ -60,9 +60,9 @@
                                     <div class="card-header">Главная картинка</div>
                                     <div class="card-body">
                                         <BackBunner
-                                        :card="currentFilm.baseImg"
-                                        @change-card="mainPictureChanged"
-                                        @remove-banner="removeMainPic"
+                                        :card="current.baseImg"
+                                        @change-card="changedMainImg"
+                                        @remove-banner="removeMainImg"
                                          />
                                     </div>
                                 </div>
@@ -70,15 +70,15 @@
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <!-- <BannerUpper 
-                                            v-for="pic in currentFilm.img"
+                                            <BannerUpper 
+                                            v-for="pic in current.img"
                                             :key="pic.id"
                                             :card="pic"
-                                            @remove-card="removeFilmPicture"
-                                            /> -->
+                                            @remove-card="remove"
+                                            />
                                         </div>
                                         <button 
-                                        @click.prevent="addFilmPicture"
+                                        @click.prevent="add"
                                         class="btn btn-outline-info btn-block my-2">
                                             Добавить картинку
                                         </button>
@@ -94,7 +94,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.trailerLink"
+                                            v-model="current.trailerLink"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Ссылка на видео в youtube"
@@ -113,7 +113,7 @@
                                                     class="form-check-input"
                                                     id="3D"
                                                     value="3D"
-                                                    v-model="currentFilm.filmType"
+                                                    v-model="current.filmType"
                                                     >
                                                     <label
                                                     class="form-check-label"
@@ -124,7 +124,7 @@
                                                     type="checkbox" 
                                                     class="form-check-input"
                                                     id="2D"
-                                                    v-model="currentFilm.filmType"
+                                                    v-model="current.filmType"
                                                     value="2D"
                                                     checked
                                                     >
@@ -137,7 +137,7 @@
                                                     type="checkbox" 
                                                     class="form-check-input"
                                                     id="IMAX"
-                                                    v-model="currentFilm.filmType"
+                                                    v-model="current.filmType"
                                                     value="IMAX"
                                                     >
                                                     <label
@@ -156,7 +156,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.url"
+                                            v-model="current.SEO.url"
                                             type="text" 
                                             class="form-control"
                                             placeholder="url"
@@ -167,7 +167,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.title"
+                                            v-model="current.SEO.title"
                                             type="text" 
                                             class="form-control"
                                             placeholder="title"
@@ -178,7 +178,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.keywords"
+                                            v-model="current.SEO.keywords"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Keywords"
@@ -189,7 +189,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea
-                                            v-model="currentFilm.SEO.description"
+                                            v-model="current.SEO.description"
                                             type="text"
                                             class="form-control"
                                             placeholder="Описание"
@@ -201,14 +201,14 @@
                                     <button 
                                     class="btn btn-info col-4 pt-2 pb-2 mt-3 mb-3 offset-1"
                                     type="button"
-                                    @click="submitFilmDetails"
+                                    @click="submit"
                                     >
                                     Сохранить и выйти
                                     </button>
                                     <button 
                                     class="btn btn-outline-warning pt-2 pb-2 mt-3 mb-3 col-4 offset-2"
                                     type="button"
-                                    @click="resetCurrentFilm"
+                                    @click="reset"
                                     >
                                     Вернуть базовую версию
                                     </button>
@@ -224,7 +224,7 @@
                                         <span class="input-group-text">Назва</span>
                                     </div>
                                     <input
-                                        v-model="currentFilm.titleUA"
+                                        v-model="current.titleUA"
                                         type="text"
                                         class="form-control"
                                         placeholder="Назва фільму"
@@ -235,7 +235,7 @@
                                         <span class="input-group-text">Опис</span>
                                     </div>
                                     <textarea
-                                    v-model="currentFilm.descriptionUA"
+                                    v-model="current.descriptionUA"
                                     type="text"
                                     class="form-control"
                                     placeholder="Опис фільму"
@@ -245,9 +245,9 @@
                                     <div class="card-header">Головне зображення</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="currentFilm.baseImgUA"
-                                        @change-card="mainPictureChangedUA"
-                                        @remove-banner="removeMainPicUA"
+                                        :card="current.baseImgUA"
+                                        @change-card="changedMainImgUA"
+                                        @remove-banner="removeMainImgUA"
                                         />
                                     </div>
                                 </div>
@@ -255,15 +255,15 @@
                                     <div class="card-header">Галерея зображень</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <!-- <BannerUpper 
-                                            v-for="pic in currentFilm.imgUA"
+                                            <BannerUpper 
+                                            v-for="pic in current.imgUA"
                                             :key="pic.id"
                                             :card="pic"
-                                            @remove-card="removeFilmPictureUA"
-                                            /> -->
+                                            @remove-card="removeUA"
+                                            />
                                         </div>
                                         <button 
-                                        @click.prevent="addFilmPictureUA"
+                                        @click.prevent="addUA"
                                         class="btn btn-outline-info btn-block my-2">
                                             Додати зображення
                                         </button>
@@ -279,7 +279,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.trailerLinkUA"
+                                            v-model="current.trailerLinkUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Посилання на відео в youtube"
@@ -294,7 +294,7 @@
                                             <div class="form-group d-flex">
                                                 <div class="form-check mx-3">
                                                     <input 
-                                                    v-model="currentFilm.filmTypeUA"
+                                                    v-model="current.filmTypeUA"
                                                     type="checkbox" 
                                                     class="form-check-input"
                                                     id="3D"
@@ -306,7 +306,7 @@
                                                 </div>
                                                 <div class="form-check mx-3">
                                                     <input 
-                                                    v-model="currentFilm.filmTypeUA"
+                                                    v-model="current.filmTypeUA"
                                                     type="checkbox" 
                                                     class="form-check-input"
                                                     id="2D"
@@ -319,7 +319,7 @@
                                                 </div>
                                                 <div class="form-check mx-3">
                                                     <input 
-                                                    v-model="currentFilm.filmTypeUA"
+                                                    v-model="current.filmTypeUA"
                                                     type="checkbox" 
                                                     class="form-check-input"
                                                     id="IMAX"
@@ -341,7 +341,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.urlUA"
+                                            v-model="current.SEO.urlUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="url"
@@ -352,7 +352,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.titleUA"
+                                            v-model="current.SEO.titleUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="title"
@@ -363,7 +363,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="currentFilm.SEO.keywordsUA"
+                                            v-model="current.SEO.keywordsUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Keywords"
@@ -374,7 +374,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea
-                                            v-model="currentFilm.SEO.descriptionUA"
+                                            v-model="current.SEO.descriptionUA"
                                             type="text"
                                             class="form-control"
                                             placeholder="Опис"
@@ -386,14 +386,14 @@
                                     <button 
                                     class="btn btn-info col-4 pt-2 pb-2 mt-3 mb-3 offset-1"
                                     type="button"
-                                    @click="submitFilmDetails"
+                                    @click="submit"
                                     >
                                     Зберегти і вийти
                                     </button>
                                     <button 
                                     class="btn btn-outline-warning pt-2 pb-2 mt-3 mb-3 col-4 offset-2"
                                     type="button"
-                                    @click="resetCurrentFilm"
+                                    @click="reset"
                                     >
                                     Повернути базову версію
                                     </button>
@@ -407,92 +407,89 @@
 </template>
 
 <script>
-import CONFIG from "@/config.js"
-import BackBunner from "@/components/banners/BackBunner"
-// import BannerUpper from '@/components/banners/BannerUpper'
+import CONFIG from '@/config.js'
+import BackBunner from '@/components/banners/BackBunner.vue'
+import BannerUpper from '@/components/banners/BannerUpper.vue'
 
 export default ({
-  name: "film",
-  components: {
+    name: "film-edit",
+    components: {
       BackBunner,
-    //   BannerUpper
-  },
-  props: {
-        id: {
+      BannerUpper
+    },
+    props: {
+        filmIndex: {
             type: Number,
             required: true,
-            default: 0,
-        },
+            default: 0
+        }
     },
     data() {
         return {
-            currentFilm: null,
+            current: null,
         }
     },
     beforeRouteEnter(to, from, next) {
-        next((vm) => vm.loadFilmsElementFromDatabase())
+        next((vm) => vm.loadFromDatabase())
     },
     methods: {
-        async loadFilmsElementFromDatabase() {
-            const path = `/films/${this.id}`
+        async loadFromDatabase() {
+            const path = `/film/${this.filmIndex}`
             const result = await this.$store.dispatch("readFromDatabase", path)
-            if (result) this.currentFilm = result
+            if (result) this.current = result
         },
-        submitFilmDetails() {
-            // this.saveFilmsElementToDatabase().then(() => {
-            //     this.$successMessage("Фильм записан")    
-            // })
-            this.saveFilmsElementToDatabase()
+        submit() {
+            this.saveToDatabase()
             this.$router.push({
                 name: "films",
             })
         },
-        async saveFilmsElementToDatabase() {
-            const payload = this.currentFilm
-            const path = `/films/${this.id}`
+        async saveToDatabase() {
+            const payload = this.current
+            const path = `/film/${this.filmIndex}`
             return await this.$store.dispatch("writeToDatabase", {
                 payload,
                 path,
             })
         },
-        mainPictureChanged(target) {
-            this.currentFilm.baseImg.url = target.url
+        changedMainImg(target) {
+            this.current.baseImg.url = target.url
         },
-        mainPictureChangedUA(target) {
-            this.currentFilm.baseImgUA.url = target.url
+        changedMainImgUA(target) {
+            this.current.baseImgUA.url = target.url
         },
-        removeMainPic: async function () {
-            this.currentFilm.baseImg.url = CONFIG.PICTURE_PLUG_URL
+        removeMainImg: async function () {
+            this.current.baseImg.url = CONFIG.PICTURE_PLUG_URL
         },
-        removeMainPicUA: async function () {
-            this.currentFilm.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
+        removeMainImgUA: async function () {
+            this.current.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
         },
-        resetCurrentFilm() {
-            // maybe clear some garbage
-            this.$router.go()
-            // this.$successMessage("Базовая версия восстановлена")
+        reset() {
+            this.$router.push({
+                name: "films" 
+            })  
         },
-        addFilmPicture() {
-            this.currentFilm.img.push({
+        add() {
+            this.current.img.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             })
         },
-        addFilmPictureUA() {
-            this.currentFilm.imgUA.push({
+        addUA() {
+            this.current.imgUA.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             })
         },
-        removeFilmPicture: async function (target) {
-            this.currentFilm.img = this.currentFilm.img.filter(
+        remove: async function (target) {
+            this.current.img = this.current.img.filter(
                 (element) => element != target
             )
             if (target.url == CONFIG.PICTURE_PLUG_URL) return
             await this.$store.dispatch("removeFromStorage", target.url)
         },
-        removeFilmPictureUA: async function (target) {
-            this.currentFilm.imgUA = this.currentFilm.imgUA.filter(
+        removeUA: async function (target) {
+            this.current.imgUA = this.current.imgUA.filter(
                 (element) => element != target
             )
             if (target.url == CONFIG.PICTURE_PLUG_URL) return
