@@ -204,20 +204,20 @@ export default ({
             },
             bottom: [],
             times: ["5", "15", "30"],
-        };
+        }
     },
     beforeRouteEnter(to, from, next) {
         next((vm) => {
-            vm.fetchBanners();
-            vm.fetchBottom();
-            vm.fetchMidBanner();
-            vm.loadSettings();
-        });
+            vm.fetchBanners()
+            vm.fetchBottom()
+            vm.fetchMidBanner()
+            vm.loadSettings()
+        })
     },
     watch: {
         settings: {
             handler() {
-                this.saveSettings();
+                this.saveSettings()
             },
             deep: true,
         },
@@ -227,31 +227,31 @@ export default ({
             const result = await this.$store.dispatch(
                 "readFromDatabase",
                 "/settings"
-            );
+            )
             if (result) {
-                this.settings = result;
+                this.settings = result
             }
         },
         saveSettings() {
-            const payload = this.settings;
-            const path = "/settings";
-            this.$store.dispatch("writeToDatabase", { payload, path });
+            const payload = this.settings
+            const path = "/settings"
+            this.$store.dispatch("writeToDatabase", { payload, path })
         },
         addBanner() {
             this.banners.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
                 text: "описание",
-            });
+            })
         },
         async removeBanner(target) {
-            this.banners = this.banners.filter((element) => element != target);
-            if (target.url == CONFIG.PICTURE_PLUG_URL) return;
-            await this.$store.dispatch("removeFromStorage", target.url);
+            this.banners = this.banners.filter((element) => element != target)
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return
+            await this.$store.dispatch("removeFromStorage", target.url)
         },
         changeBanner(card) {
-            const index = this.banners.findIndex((item) => item.id == card.id);
-            if (index != -1) this.banners[index] = card;
+            const index = this.banners.findIndex((item) => item.id == card.id)
+            if (index != -1) this.banners[index] = card
         },
         async saveBanners() {
             const payload = this.banners
@@ -275,52 +275,62 @@ export default ({
             const result = await this.$store.dispatch(
                 "readFromDatabase",
                 "/banners"
-            );
-            if (result) this.banners = result;
+            )
+            if (result) this.banners = result
         },
         async changeMidBanner() {
-            const path = "/midbanners";
-            const payload = this.midBanner;
-            await this.$store.dispatch("writeToDatabase", { payload, path });
+            const path = "/midbanners"
+            const payload = this.midBanner
+            await this.$store.dispatch("writeToDatabase", { payload, path })
         },
         async removeMidBanner() {
-            this.midBanner.url = CONFIG.PICTURE_PLUG_URL;
-            this.midBanner.bannerType = "Просто фон";
+            this.midBanner.url = CONFIG.PICTURE_PLUG_URL
+            this.midBanner.bannerType = "Просто фон"
         },
         async fetchMidBanner() {
             const result = await this.$store.dispatch(
                 "readFromDatabase",
                 "/midbanners"
-            );
+            )
             if (result) {
-                this.midBanner.url = result.url;
-                this.midBanner.bannerType = result.bannerType;
+                this.midBanner.url = result.url
+                this.midBanner.bannerType = result.bannerType
             }
         },
         addBottom() {
             const action = {
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
-            };
-            this.bottom.push(action);
+            }
+            this.bottom.push(action)
         },
         async removeBottom(target) {
-            this.bottom = this.bottom.filter((element) => element != target);
-            if (target.url == CONFIG.PICTURE_PLUG_URL) return;
-            await this.$store.dispatch("removeFromStorage", target.url);
+            this.bottom = this.bottom.filter((element) => element != target)
+            if (target.url == CONFIG.PICTURE_PLUG_URL) return
+            await this.$store.dispatch("removeFromStorage", target.url)
         },
         async saveBottom() {
-            const payload = this.bottom;
-            const path = "/bannersBottom";
-            await this.$store.dispatch("writeToDatabase", { payload, path });
-            // this.$successMessage("Данные сохранены");
+            const payload = this.bottom
+            const path = "/bannersBottom"
+            this.$store.getters['getBannerImages'].forEach(async banner => {
+                const downloadUrl = await this.$store.dispatch("uploadToStorage", {
+                    file: banner.file,
+                    path: "/images/"
+                })
+                const found = payload.find(item => item.id == banner.id)
+                if(found) {
+                    found.url = downloadUrl
+                    await this.$store.dispatch("writeToDatabase", {payload: found, path })
+                }
+            })
+            this.$store.commit('clearBannerImages')
         },
         async fetchBottom() {
             const result = await this.$store.dispatch(
                 "readFromDatabase",
                 "/bannersBottom"
-            );
-            if (result) this.bottom = result;
+            )
+            if (result) this.bottom = result
         },
     }
   
