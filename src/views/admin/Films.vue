@@ -7,10 +7,10 @@
       </div>
       <div class="card-body card-group">
         <CardFilms 
-        v-for="film in filmsCurrent"
-        :key="film.id"
+        v-for="(film, index) in filmsCurrent"
+        :key="index"
+        :index="index"
         :film="film"  
-        @film-clicked="edit(film)"
         @remove-film="removeFilm"
         />
       </div>
@@ -28,10 +28,10 @@
       </div>
       <div class="card-body card-group">
         <CardFilms 
-        v-for="film in filmsSoon"
-        :key="film.id"
+        v-for="(film, index) in filmsSoon"
+        :key="index"
+        :index="index"
         :film="film"  
-        @film-clicked="edit(film)"
         @remove-film="removeFilm"
         />
       </div>
@@ -47,11 +47,10 @@
 </template>
 
 <script>
-import CONFIG from '@/config.js'
-import CardFilms from '@/components/films/CardFilms.vue'
-
+import CONFIG from "@/config.js"
+import CardFilms from "@/components/films/CardFilms.vue"
 export default {
-    name: "films",
+    name: "Films",
     components: {
         CardFilms
     },
@@ -76,8 +75,8 @@ export default {
         const newFilm = {
           id: `${Date.now()}${Math.random()}`,
           ListofСurrentFilms: currentFilms,
-          title: "Новый фильм",
-          titleUA: "Новий фільм",
+          title: "",
+          titleUA: "",
           descriprion: "",
           descriprionUA: "",
           baseImg: {
@@ -86,49 +85,36 @@ export default {
           baseImgUA: {
             url: CONFIG.PICTURE_PLUG_URL
           },
-          img: [
-            {
-              id: `${Date.now()}${Math.random()}`,
-              url: CONFIG.PICTURE_PLUG_URL
-            }
-          ],
-          imgUA: [
-            {
-              id: `${Date.now()}${Math.random()}`,
-              url: CONFIG.PICTURE_PLUG_URL
-            }
-          ],
+          img: {
+            id: `${Date.now()}${Math.random()}`,
+            url: CONFIG.PICTURE_PLUG_URL
+          },
+          imgUA: {
+            id: `${Date.now()}${Math.random()}`,
+            url: CONFIG.PICTURE_PLUG_URL
+          },
           trailerLink: "http:/youtube.com",
           trailerLinkUA: "http:/youtube.com",
           filmType: "[2D]",
           filmTypeUA: "[2D]",
           SEO: {
-                    url: "",
-                    urlUA: "",
-                    title: "",
-                    titleUA: "",
-                    keywords: "",
-                    keywordsUA: "",
-                    description: "",
-                    descriptionUA: "",
+                    url: "/img/uploadPicture.jpg",
+                    urlUA: "/img/uploadPicture.jpg",
+                    title: "/img/uploadPicture.jpg",
+                    titleUA: "/img/uploadPicture.jpg",
+                    keywords: "key words here",
+                    keywordsUA: "key words here",
+                    description: "/img/uploadPicture.jpg",
+                    descriptionUA: "/img/uploadPicture.jpg",
                 }
         }
         this.films.push(newFilm)
         this.saveToDatabase()
       },
+
     async removeFilm(film) {
       this.removeFromStorage(film.baseImg)
       this.removeFromStorage(film.baseImgUA)
-      if (film.img) {
-                film.img.forEach((item) =>
-                    this.removeFromStorage(item)
-                );
-            }
-            if (film.imgUA) {
-                film.imgUA.forEach((item) =>
-                    this.removeFromStorage(item)
-                );
-            }
       this.films = this.films.filter((item) => item != film)
       this.saveToDatabase()
             
@@ -139,24 +125,16 @@ export default {
     },
     async saveToDatabase() {
       const payload = this.films
-      const path = "/film"
+      const path = "/films"
       return await this.$store.dispatch("writeToDatabase", { payload, path })
     },
     async loadToDatabase() {
       const result = await this.$store.dispatch(
         "readFromDatabase",
-         "/film"
+         "/films"
          )
       if (result) this.films = result
-    },
-    edit(film) {
-      const index = this.films.findIndex((item) => item == film)
-      this.$router.push({
-              name: "film-edit",
-              params: { filmIndex: index }
-      })
     }
-
   }  
 }
 </script>

@@ -2,27 +2,6 @@ import firebase from "firebase/app"
 import "firebase/storage"
 
 export default {
-    state: {
-        bannerImages: []
-    },
-    mutations: {
-        setBannerImages(state, payload) {
-            const found = state.bannerImages.find(bannerImage => bannerImage.id == payload.id)
-            if (found) {
-                found.file = payload.file
-            } else {
-                state.bannerImages.push(payload)
-            }
-        },
-        clearBannerImages(state) {
-            state.bannerImages = []
-        }
-    },
-    getters: {
-        getBannerImages(state) {
-            return state.bannerImages
-        }
-    },
     actions: {
         async uploadToStorage(_state, { file, path }) {
             return await firebase
@@ -52,8 +31,7 @@ export default {
 
         async writeToDatabase(_state, { payload, path }) {
             try {
-                console.log(payload)
-                return await firebase.database().ref(path).push(payload)
+                return await firebase.database().ref(path).set(payload)
             } catch (error) {
                 console.log(`Error writing to database: ${error}`)
                 throw error

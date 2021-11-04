@@ -36,7 +36,7 @@
                 <input
                     class="form-control"
                     type="text"
-                    
+                    :value="localCard.url"
                     aria-label="Current URL"
                 />
             </div>
@@ -76,22 +76,17 @@ export default ({
         showText: { type: Boolean, default: true, required: false },
     },
     methods: {
-        uploadImage: async function (event) {
-            const file = event.target.files[0]
+        uploadImage: async function (event, path="/images") {
+            event.stopPropagation();
+            event.preventDefault();
+            const file = event.target.files[0];
             if (!file) return false
-            this.$store.commit('setBannerImages', {
-                id: this.localCard.id,
-                file: file
-            }) 
-            this.localCard.url = URL.createObjectURL(file)
-            // console.log(this.$store.getters['getBannerImages'])
             
-            // this.localCard.url = await this.$store.dispatch("uploadToStorage", {
-            //     file,
-            //     path,
-            // });
-            // this.$emit("change-card", this.localCard)
-
+            this.localCard.url = await this.$store.dispatch("uploadToStorage", {
+                file,
+                path,
+            });
+            this.$emit("change-card", this.localCard);
         },
     },
 })

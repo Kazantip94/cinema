@@ -58,12 +58,19 @@ export default new Router({
       meta: {layout: 'admin'},
       component: () => import('../views/admin/Films.vue')
     },
+    // {
+    //   path: '/filmInfo/:id',
+    //   props: true,
+    //   name: 'filmInfo',
+    //   meta: {layout: 'admin'},
+    //   component: () => import('../views/admin/FilmInfo.vue')
+    // },
     {
-      path: '/film/:filmIndex',
+      path: '/film/:id',
       props: true,
-      name: 'film-edit',
+      name: 'film',
       meta: {layout: 'admin'},
-      component: () => import('../views/admin/FilmEdit.vue')
+      component: () => import('../views/admin/FilmInfo.vue')
     },
     {
       path: '/news',
