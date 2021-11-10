@@ -9,8 +9,8 @@
         <CardFilms 
         v-for="(film, index) in filmsCurrent"
         :key="index"
-        :index="index"
         :film="film"  
+        @film-clicked="edit(film.uuid)"
         @remove-film="removeFilm"
         />
       </div>
@@ -30,8 +30,8 @@
         <CardFilms 
         v-for="(film, index) in filmsSoon"
         :key="index"
-        :index="index"
         :film="film"  
+        @film-clicked="edit(film.uuid)"
         @remove-film="removeFilm"
         />
       </div>
@@ -50,7 +50,7 @@
 import CONFIG from "@/config.js"
 import CardFilms from "@/components/films/CardFilms.vue"
 export default {
-    name: "Films",
+    name: "films",
     components: {
         CardFilms
     },
@@ -61,60 +61,52 @@ export default {
     },
     computed: {
       filmsCurrent() {
-        return this.films.filter((item) => item.ListofСurrentFilms)
+        const currentFilms = []
+        for(let prop in this.films) {
+          if(this.films[prop].isCurrentFilm) {
+            currentFilms.push(this.films[prop])
+          }
+          
+        }
+        return currentFilms
+
       },
       filmsSoon() {
-        return this.films.filter((item) => !item.ListofСurrentFilms)
+        const soonFilms = []
+        for(let prop in this.films) {
+          if(!this.films[prop].isCurrentFilm) {
+            soonFilms.push(this.films[prop])
+          }
+          
+        }
+        return soonFilms
       }
     },
     beforeRouteEnter(to, from, next) {
         next((vm) => vm.loadToDatabase())
     },
+    
     methods: {
-      add(currentFilms) {
-        const newFilm = {
-          id: `${Date.now()}${Math.random()}`,
-          ListofСurrentFilms: currentFilms,
-          title: "",
-          titleUA: "",
-          descriprion: "",
-          descriprionUA: "",
-          baseImg: {
-            url: CONFIG.PICTURE_PLUG_URL
-          },
-          baseImgUA: {
-            url: CONFIG.PICTURE_PLUG_URL
-          },
-          img: {
-            id: `${Date.now()}${Math.random()}`,
-            url: CONFIG.PICTURE_PLUG_URL
-          },
-          imgUA: {
-            id: `${Date.now()}${Math.random()}`,
-            url: CONFIG.PICTURE_PLUG_URL
-          },
-          trailerLink: "http:/youtube.com",
-          trailerLinkUA: "http:/youtube.com",
-          filmType: "[2D]",
-          filmTypeUA: "[2D]",
-          SEO: {
-                    url: "/img/uploadPicture.jpg",
-                    urlUA: "/img/uploadPicture.jpg",
-                    title: "/img/uploadPicture.jpg",
-                    titleUA: "/img/uploadPicture.jpg",
-                    keywords: "key words here",
-                    keywordsUA: "key words here",
-                    description: "/img/uploadPicture.jpg",
-                    descriptionUA: "/img/uploadPicture.jpg",
-                }
-        }
-        this.films.push(newFilm)
-        this.saveToDatabase()
-      },
-
+      
+    add(isCurrentFilm) {
+      this.$router.push({
+        name: 'film-edit',
+        params: {isCurrentFilm}
+      })
+    },
     async removeFilm(film) {
       this.removeFromStorage(film.baseImg)
       this.removeFromStorage(film.baseImgUA)
+      if (film.img) {
+                film.img.forEach((item) =>
+                    this.removeFromStorage(item)
+                )
+            }
+      if (film.imgUA) {
+                film.imgUA.forEach((item) =>
+                    this.removeFromStorage(item)
+                )
+            }
       this.films = this.films.filter((item) => item != film)
       this.saveToDatabase()
             
@@ -133,7 +125,21 @@ export default {
         "readFromDatabase",
          "/films"
          )
-      if (result) this.films = result
+      if (result) {
+        this.films = result
+        for(let key in this.films) {
+          this.films[key].uuid = key
+        }
+        
+        console.log(this.films)
+      }
+    },
+    edit(uuid) {
+      
+      this.$router.push({
+              name: "film-edit",
+              params: { filmIndex: uuid }
+      })
     }
   }  
 }

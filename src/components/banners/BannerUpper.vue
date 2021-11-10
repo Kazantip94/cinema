@@ -36,8 +36,9 @@
                 <input
                     class="form-control"
                     type="text"
-                    :value="localCard.url"
+                    placeholder="URL"
                     aria-label="Current URL"
+                    
                 />
             </div>
 

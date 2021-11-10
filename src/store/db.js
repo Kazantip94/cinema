@@ -38,6 +38,24 @@ export default {
             }
         },
 
+        async getFromDatabaseById(_state, { payload, path }) {
+            try {
+                return await firebase.database().ref(`${path}/${payload}`)
+            } catch (error) {
+                console.log(`Error writing to database: ${error}`)
+                throw error
+            }
+        },
+
+        async writeInstanceToDatabase(_state, { payload, path }) {
+            try {
+                return await firebase.database().ref(path).push(payload)
+            } catch (error) {
+                console.log(`Error writing to database: ${error}`)
+                throw error
+            }
+        },
+
         async readFromDatabase(_state, path) {
             try {
                 return (

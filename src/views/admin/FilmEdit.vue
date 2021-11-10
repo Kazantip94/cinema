@@ -61,8 +61,8 @@
                                     <div class="card-body">
                                         <BackBunner
                                         :card="currentFilm.baseImg"
-                                        @change-card="mainPictureChanged"
-                                        @remove-banner="removeMainPic"
+                                        @change-card="changedLogo"
+                                        @remove-banner="removeLogo"
                                          />
                                     </div>
                                 </div>
@@ -70,12 +70,12 @@
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <!-- <BannerUpper 
+                                            <BannerUpper 
                                             v-for="pic in currentFilm.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removeFilmPicture"
-                                            /> -->
+                                            />
                                         </div>
                                         <button 
                                         @click.prevent="addFilmPicture"
@@ -201,14 +201,14 @@
                                     <button 
                                     class="btn btn-info col-4 pt-2 pb-2 mt-3 mb-3 offset-1"
                                     type="button"
-                                    @click="submitFilmDetails"
+                                    @click="submit"
                                     >
                                     Сохранить и выйти
                                     </button>
                                     <button 
                                     class="btn btn-outline-warning pt-2 pb-2 mt-3 mb-3 col-4 offset-2"
                                     type="button"
-                                    @click="resetCurrentFilm"
+                                    @click="reset"
                                     >
                                     Вернуть базовую версию
                                     </button>
@@ -246,8 +246,8 @@
                                     <div class="card-body">
                                         <BackBunner 
                                         :card="currentFilm.baseImgUA"
-                                        @change-card="mainPictureChangedUA"
-                                        @remove-banner="removeMainPicUA"
+                                        @change-card="changedLogoUA"
+                                        @remove-banner="removeLogoUA"
                                         />
                                     </div>
                                 </div>
@@ -255,12 +255,12 @@
                                     <div class="card-header">Галерея зображень</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <!-- <BannerUpper 
+                                            <BannerUpper 
                                             v-for="pic in currentFilm.imgUA"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removeFilmPictureUA"
-                                            /> -->
+                                            />
                                         </div>
                                         <button 
                                         @click.prevent="addFilmPictureUA"
@@ -386,14 +386,14 @@
                                     <button 
                                     class="btn btn-info col-4 pt-2 pb-2 mt-3 mb-3 offset-1"
                                     type="button"
-                                    @click="submitFilmDetails"
+                                    @click="submit"
                                     >
                                     Зберегти і вийти
                                     </button>
                                     <button 
                                     class="btn btn-outline-warning pt-2 pb-2 mt-3 mb-3 col-4 offset-2"
                                     type="button"
-                                    @click="resetCurrentFilm"
+                                    @click="reset"
                                     >
                                     Повернути базову версію
                                     </button>
@@ -407,70 +407,129 @@
 </template>
 
 <script>
-import CONFIG from "@/config.js"
-import BackBunner from "@/components/banners/BackBunner"
-// import BannerUpper from '@/components/banners/BannerUpper'
+import CONFIG from '@/config.js'
+import BackBunner from '@/components/banners/BackBunner.vue'
+import BannerUpper from '@/components/banners/BannerUpper.vue'
 
 export default ({
   name: "film",
   components: {
       BackBunner,
-    //   BannerUpper
+      BannerUpper
   },
   props: {
-        id: {
-            type: Number,
-            required: true,
-            default: 0,
+        isCurrentFilm: {
+            type: Boolean,
+            required: false,
+        },
+        filmIndex: {
+            type: String,
+            required: false,
+            default: '',
         },
     },
     data() {
         return {
-            currentFilm: null,
-        }
+            currentFilm: {
+                id: `${Date.now()}${Math.random()}`,
+                isCurrentFilm: this.isCurrentFilm,
+                title: "Новый фильм",
+                titleUA: "Новий фільм",
+                descriprion: "",
+                descriprionUA: "",
+                baseImg: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                baseImgUA: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                img: [
+                    {
+                    id: `${Date.now()}${Math.random()}`,
+                    url: CONFIG.PICTURE_PLUG_URL
+                    }
+                ],
+                imgUA: [
+                    {
+                    id: `${Date.now()}${Math.random()}`,
+                    url: CONFIG.PICTURE_PLUG_URL
+                    }
+                ],
+                url: "",
+                urlUA: "",
+                trailerLink: "http:/youtube.com",
+                trailerLinkUA: "http:/youtube.com",
+                filmType: "[2D]",
+                filmTypeUA: "[2D]",
+                SEO: {
+                            url: "",
+                            urlUA: "",
+                            title: "",
+                            titleUA: "",
+                            keywords: "",
+                            keywordsUA: "",
+                            description: "",
+                            descriptionUA: "",
+                        }
+                }
+            }
     },
-    beforeRouteEnter(to, from, next) {
-        next((vm) => vm.loadFilmsElementFromDatabase())
+    // beforeRouteEnter(to, from, next) {
+    //     next((vm) => vm.loadFromDatabase())
+    // },
+    async mounted() {
+        const film = await this.getById()
+
+        film.on('value', snapshot => {
+            this.currentFilm = snapshot.val()
+            console.log(snapshot.val())
+        })
     },
     methods: {
-        async loadFilmsElementFromDatabase() {
-            const path = `/films/${this.id}`
-            const result = await this.$store.dispatch("readFromDatabase", path)
-            if (result) this.currentFilm = result
-        },
-        submitFilmDetails() {
-            // this.saveFilmsElementToDatabase().then(() => {
-            //     this.$successMessage("Фильм записан")    
-            // })
-            this.saveFilmsElementToDatabase()
-            this.$router.push({
-                name: "films",
+        // async loadFromDatabase() {
+        //     const path = `/films/${this.filmIndex}`
+        //     const result = await this.$store.dispatch("readFromDatabase", path)
+        //     if (result) this.currentFilm = result
+        // },
+        submit() {
+            this.saveToDatabase().then(() => {
+                this.$router.push({
+                    name: "films",
+                })
             })
         },
-        async saveFilmsElementToDatabase() {
+        async saveToDatabase() {
             const payload = this.currentFilm
-            const path = `/films/${this.id}`
-            return await this.$store.dispatch("writeToDatabase", {
+            const path = `/films`
+            return await this.$store.dispatch("writeInstanceToDatabase", {
                 payload,
                 path,
             })
         },
-        mainPictureChanged(target) {
+        async getById() {
+            const payload = this.filmIndex
+            const path = `/films`
+            return await this.$store.dispatch("getFromDatabaseById", {
+                payload,
+                path,
+            })
+        },
+        changedLogo(target) {
             this.currentFilm.baseImg.url = target.url
         },
-        mainPictureChangedUA(target) {
+        changedLogoUA(target) {
             this.currentFilm.baseImgUA.url = target.url
         },
-        removeMainPic: async function () {
+        removeLogo: async function () {
             this.currentFilm.baseImg.url = CONFIG.PICTURE_PLUG_URL
         },
-        removeMainPicUA: async function () {
+        removeLogoUA: async function () {
             this.currentFilm.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
         },
-        resetCurrentFilm() {
-            // maybe clear some garbage
-            this.$router.go()
-            // this.$successMessage("Базовая версия восстановлена")
+        reset() {
+            this.$router.push({
+                name: "films",
+            })
         },
         addFilmPicture() {
             this.currentFilm.img.push({
