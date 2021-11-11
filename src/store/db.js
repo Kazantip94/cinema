@@ -28,7 +28,14 @@ export default {
                     throw error
                 })
         },
-
+        async updateToDatabase(_state, { payload, path }) {
+            try {
+                return await firebase.database().ref(path).set(payload)
+            } catch (error) {
+                console.log(`Error writing to database: ${error}`)
+                throw error
+            }
+        },
         async writeToDatabase(_state, { payload, path }) {
             try {
                 return await firebase.database().ref(path).set(payload)

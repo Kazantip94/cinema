@@ -478,12 +478,13 @@ export default ({
     //     next((vm) => vm.loadFromDatabase())
     // },
     async mounted() {
-        const film = await this.getById()
+        if(this.filmIndex) {
+            const film = await this.getById()
 
-        film.on('value', snapshot => {
-            this.currentFilm = snapshot.val()
-            console.log(snapshot.val())
-        })
+            film.on('value', snapshot => {
+                this.currentFilm = snapshot.val()
+            })
+        }
     },
     methods: {
         // async loadFromDatabase() {
@@ -492,10 +493,26 @@ export default ({
         //     if (result) this.currentFilm = result
         // },
         submit() {
-            this.saveToDatabase().then(() => {
-                this.$router.push({
-                    name: "films",
+            if(this.filmIndex) {
+                this.updateToDatabase().then(() => {
+                    this.$router.push({
+                        name: "films",
+                    })
                 })
+            } else {
+                this.saveToDatabase().then(() => {
+                    this.$router.push({
+                        name: "films",
+                    })
+                })
+            }
+        },
+        async updateToDatabase() {
+            const payload = this.currentFilm
+            const path = `/films/${this.filmIndex}`
+            return await this.$store.dispatch("updateToDatabase", {
+                payload,
+                path,
             })
         },
         async saveToDatabase() {

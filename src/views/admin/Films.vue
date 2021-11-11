@@ -11,7 +11,7 @@
         :key="index"
         :film="film"  
         @film-clicked="edit(film.uuid)"
-        @remove-film="removeFilm"
+        @remove-film="removeFilm(film)"
         />
       </div>
       <button
@@ -32,7 +32,7 @@
         :key="index"
         :film="film"  
         @film-clicked="edit(film.uuid)"
-        @remove-film="removeFilm"
+        @remove-film="removeFilm(film)"
         />
       </div>
       <button
@@ -107,8 +107,10 @@ export default {
                     this.removeFromStorage(item)
                 )
             }
-      this.films = this.films.filter((item) => item != film)
-      this.saveToDatabase()
+            console.log(this.films[film.uuid])
+            // delete this.films[film.uuid]
+            this.$delete(this.films, film.uuid)
+            console.log(this.films)
             
     },
     async removeFromStorage(picture) {
@@ -135,7 +137,6 @@ export default {
       }
     },
     edit(uuid) {
-      
       this.$router.push({
               name: "film-edit",
               params: { filmIndex: uuid }
