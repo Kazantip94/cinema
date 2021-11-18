@@ -107,10 +107,9 @@ export default {
                     this.removeFromStorage(item)
                 )
             }
-            console.log(this.films[film.uuid])
-            // delete this.films[film.uuid]
+      this.$store.dispatch("removeFromDatabase", {payload: film.uuid, path: "films"}).then(() => {
             this.$delete(this.films, film.uuid)
-            console.log(this.films)
+        })
             
     },
     async removeFromStorage(picture) {

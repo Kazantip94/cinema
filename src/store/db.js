@@ -63,6 +63,15 @@ export default {
             }
         },
 
+        async removeFromDatabase(_state, { payload, path }) {
+            try {
+                return await firebase.database().ref(path + '/' + payload).remove()
+            } catch (error) {
+                console.log(`Error writing to database: ${error}`)
+                throw error
+            }
+        },
+
         async readFromDatabase(_state, path) {
             try {
                 return (

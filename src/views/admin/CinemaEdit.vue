@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cinema" ref="form">
+    <div v-if="currentCinema" ref="form">
         <div class="card">
             <div class="card-body">
                     <div class="card-header p-0 border-bottom-0">
@@ -36,7 +36,7 @@
                                         <span class="input-group-text">Название</span>
                                     </div>
                                     <input
-                                        v-model="cinema.title"
+                                        v-model="currentCinema.title"
                                         type="text"
                                         class="form-control"
                                         placeholder="Название"
@@ -47,7 +47,7 @@
                                         <span class="input-group-text">Описание</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.description"
+                                    v-model="currentCinema.description"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Описание"
@@ -59,7 +59,7 @@
                                         <span class="input-group-text">Условия</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.conditions"
+                                    v-model="currentCinema.conditions"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Описание"
@@ -70,7 +70,7 @@
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.baseImg"
+                                        :card="currentCinema.baseImg"
                                         @change-card="changedLogo"
                                         @remove-banner="removeLogo"
                                         />
@@ -80,7 +80,7 @@
                                     <div class="card-header">Фото верхнего баннера</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.banner"
+                                        :card="currentCinema.banner"
                                         @change-card="changedBanner"
                                         @remove-banner="removeBanner"
                                         />
@@ -91,7 +91,7 @@
                                     <div class="card-body">
                                         <div class="card-group">
                                             <BannerUpper 
-                                            v-for="pic in cinema.img"
+                                            v-for="pic in currentCinema.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePicture"
@@ -120,7 +120,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                v-for="(hall, index) in cinema.halls"
+                                                v-for="(hall, index) in currentCinema.halls"
                                                 :key="hall.id"
                                                 >
                                                     <td>{{ hall.hallNumber }}</td>
@@ -159,7 +159,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.url"
+                                            v-model="currentCinema.SEO.url"
                                             type="text" 
                                             class="form-control"
                                             placeholder="URL"
@@ -170,7 +170,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.title"
+                                            v-model="currentCinema.SEO.title"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Title"
@@ -181,7 +181,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.keywords"
+                                            v-model="currentCinema.SEO.keywords"
                                             type="text" 
                                             class="form-control"
                                             placeholder="keywords"
@@ -192,7 +192,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea 
-                                            v-model="cinema.SEO.description"
+                                            v-model="currentCinema.SEO.description"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Описание"
@@ -224,7 +224,7 @@
                                         <span class="input-group-text">Назва</span>
                                     </div>
                                     <input 
-                                    v-model="cinema.titleUA"
+                                    v-model="currentCinema.titleUA"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Назва"
@@ -235,7 +235,7 @@
                                         <span class="input-group-text">Опис</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.descriptionUA"
+                                    v-model="currentCinema.descriptionUA"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Опис"
@@ -247,7 +247,7 @@
                                         <span class="input-group-text">Умови</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.conditionsUA"
+                                    v-model="currentCinema.conditionsUA"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Опис"
@@ -258,7 +258,7 @@
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.baseImgUA"
+                                        :card="currentCinema.baseImgUA"
                                         @change-card="changedLogoUA"
                                         @remove-banner="removeLogoUA"
                                         />
@@ -268,7 +268,7 @@
                                     <div class="card-header">Фото верхнього банера</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.bannerUA"
+                                        :card="currentCinema.bannerUA"
                                         @change-card="changedBannerUA"
                                         @remove-banner="removeBannerUA"
                                         />
@@ -279,7 +279,7 @@
                                     <div class="card-body">
                                         <div class="card-group">
                                             <BannerUpper 
-                                            v-for="pic in cinema.imgUA"
+                                            v-for="pic in currentCinema.imgUA"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePictureUA"
@@ -308,7 +308,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                v-for="(hall, index) in cinema.halls"
+                                                v-for="(hall, index) in currentCinema.halls"
                                                 :key="hall.id"
                                                 >
                                                     <td>{{ hall.hallNumber }}</td>
@@ -347,7 +347,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.urlUA"
+                                            v-model="currentCinema.SEO.urlUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="URL"
@@ -358,7 +358,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.titleUA"
+                                            v-model="currentCinema.SEO.titleUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Title"
@@ -369,7 +369,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.SEO.keywordsUA"
+                                            v-model="currentCinema.SEO.keywordsUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="keywords"
@@ -380,7 +380,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea 
-                                            v-model="cinema.SEO.descriptionUA"
+                                            v-model="currentCinema.SEO.descriptionUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Опис"
@@ -426,30 +426,148 @@ export default ({
     },
     props: {
         cinemaIndex: {
-            type: Number,
-            required: true
+            type: String,
+            required: false,
+            default: ''
         }
     },
     data() {
         return {
-            cinema: null
+            currentCinema: {
+                id: `${Date.now()}${Math.random()}`,
+                title: "Новый кинотеатр",
+                titleUA: "Новий кінотеатр",
+                description: "",
+                descriptionUA: "",
+                conditions: "",
+                conditionsUA: "",
+                baseImg: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                baseImgUA: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                banner: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                bannerUA: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },               
+                img: [
+                        {
+                            id: `${Date.now()}${Math.random()}`,
+                            url: CONFIG.PICTURE_PLUG_URL,
+                        },
+                ],
+                imgUA: [
+                        {
+                            id: `${Date.now()}${Math.random()}`,
+                            url: CONFIG.PICTURE_PLUG_URL,
+                        },
+                ],
+                halls: [
+                    {
+                        id: `${Date.now()}${Math.random()}`,
+                        hallNumber: "",
+                        date: Date.now(),
+                        description: "",
+                        descriptionUA: "",
+                        hallLayout: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        hallLayoutUA: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        banner: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        bannerUA: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        img: [
+                            {
+                                id: `${Date.now()}${Math.random()}`,
+                                url: CONFIG.PICTURE_PLUG_URL,
+                            },
+                        ],
+                        imgUA: [
+                            {
+                                id: `${Date.now()}${Math.random()}`,
+                                url: CONFIG.PICTURE_PLUG_URL,
+                            },
+                            ],
+                        SEO: {
+                            url: "",
+                            urlUA: "",
+                            title: "",
+                            titleUA: "",
+                            keywords: "",
+                            keywordsUA: "",
+                            description: "",
+                            descriptionUA: "",
+                        }
+                    }
+                ],
+                SEO: {
+                    url: "",
+                    urlUA: "",
+                    title: "",
+                    titleUA: "",
+                    keywords: "",
+                    keywordsUA: "",
+                    description: "",
+                    descriptionUA: "",
+                    },
+            }
         }
     },
-    beforeRouteEnter(to, from, next) {
-        next((vm) => vm.load())
+    async mounted() {
+        if(this.cinemaIndex) {
+            const cinema = await this.getById()
+
+            cinema.on('value', snapshot => {
+                this.currentCinema = snapshot.val()
+            })
+        }
     },
     methods: {
-        async load() {
+        submit() {
+            if(this.cinemaIndex) {
+                this.updateToDatabase().then(() => {
+                    this.$router.push({
+                        name: "cinema"
+                    })
+                })
+            } else {
+                this.save().then(() => {
+                    this.$router.push({
+                        name: "cinema"
+                    })
+                })
+            }
+        },
+        async updateToDatabase() {
+            const payload = this.currentCinema
             const path = `/cinema/${this.cinemaIndex}`
-            const result = await this.$store.dispatch('readFromDatabase', path)
-            if(result) this.cinema = result
+            return await this.$store.dispatch("updateToDatabase", {
+                payload,
+                path,
+            })
         },
         async save() {
-            const payload = this.cinema
-            const path = `/cinema/${this.cinemaIndex}`
-            return await this.$store.dispatch('writeToDatabase', {
+            const payload = this.currentCinema
+            const path = `/cinema`
+            return await this.$store.dispatch('writeInstanceToDatabase', {
                 payload,
                 path
+            })
+        },
+        async getById() {
+            const payload = this.cinemaIndex
+            const path = `/cinema`
+            return await this.$store.dispatch("getFromDatabaseById", {
+                payload,
+                path,
             })
         },
         async remove(target) {
@@ -468,7 +586,7 @@ export default ({
                     this.removeFromStorage(item)
                 )
             }
-            this.cinema.halls = this.cinema.halls.filter((item) => item != target)
+            this.currentCinema.halls = this.currentCinema.halls.filter((item) => item != target)
             this.save()
         },
         async removeFromStorage(picture) {
@@ -525,64 +643,58 @@ export default ({
                 }
                     
             }
-            this.cinema.halls.push(newHall)
+            this.currentCinema.halls.push(newHall)
             this.save()
         },
         changedLogo(target) {
-            this.cinema.baseImg.url = target.url
+            this.currentCinema.baseImg.url = target.url
         },
         changedLogoUA(target) {
-            this.cinema.baseImgUA.url = target.url
+            this.currentCinema.baseImgUA.url = target.url
         },
         changedBanner(target) {
-            this.cinema.banner.url = target.url
+            this.currentCinema.banner.url = target.url
         },
         changedBannerUA(target) {
-            this.cinema.bannerUA.url = target.url
+            this.currentCinema.bannerUA.url = target.url
         },
         removeLogo: async function () {
-            this.cinema.baseImg.url = CONFIG.PICTURE_PLUG_URL
+            this.currentCinema.baseImg.url = CONFIG.PICTURE_PLUG_URL
         },
         removeLogoUA: async function () {
-            this.cinema.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
+            this.currentCinema.baseImgUA.url = CONFIG.PICTURE_PLUG_URL
         },
         removeBanner: async function () {
-            this.cinema.banner.url = CONFIG.PICTURE_PLUG_URL
+            this.currentCinema.banner.url = CONFIG.PICTURE_PLUG_URL
         },
         removeBannerUA: async function () {
-            this.cinema.bannerUA.url = CONFIG.PICTURE_PLUG_URL
+            this.currentCinema.bannerUA.url = CONFIG.PICTURE_PLUG_URL
         },
         addPicture() {
-            this.cinema.img.push({
+            this.currentCinema.img.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             })
         },
         addPictureUA() {
-            this.cinema.imgUA.push({
+            this.currentCinema.imgUA.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             })
         },
         removePicture: async function (target) {
-            this.cinema.img = this.cinema.img.filter(
+            this.currentCinema.img = this.currentCinema.img.filter(
                 (element) => element != target
             )
             if (target.url == CONFIG.PICTURE_PLUG_URL) return
             await this.$store.dispatch("removeFromStorage", target.url)
         },
         removePictureUA: async function (target) {
-            this.cinema.imgUA = this.cinema.imgUA.filter(
+            this.currentCinema.imgUA = this.currentCinema.imgUA.filter(
                 (element) => element != target
             )
             if (target.url == CONFIG.PICTURE_PLUG_URL) return
             await this.$store.dispatch("removeFromStorage", target.url)
-        },
-        submit() {
-            this.save()
-            this.$router.push({
-                name: "cinema"
-            })
         },
         back() {
             this.$router.push({
