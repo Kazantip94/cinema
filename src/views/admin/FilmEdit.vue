@@ -474,9 +474,6 @@ export default ({
                 }
             }
     },
-    // beforeRouteEnter(to, from, next) {
-    //     next((vm) => vm.loadFromDatabase())
-    // },
     async mounted() {
         if(this.filmIndex) {
             const film = await this.getById()
@@ -487,11 +484,6 @@ export default ({
         }
     },
     methods: {
-        // async loadFromDatabase() {
-        //     const path = `/films/${this.filmIndex}`
-        //     const result = await this.$store.dispatch("readFromDatabase", path)
-        //     if (result) this.currentFilm = result
-        // },
         submit() {
             if(this.filmIndex) {
                 this.updateToDatabase().then(() => {

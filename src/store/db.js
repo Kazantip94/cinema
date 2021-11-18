@@ -36,6 +36,14 @@ export default {
                 throw error
             }
         },
+        // async removeoDatabase(_state, { payload, path }) {
+        //     try {
+        //         return await firebase.database().ref(path).remove(payload)
+        //     } catch (error) {
+        //         console.log(`Error writing to database: ${error}`)
+        //         throw error
+        //     }
+        // },
         async writeToDatabase(_state, { payload, path }) {
             try {
                 return await firebase.database().ref(path).set(payload)
