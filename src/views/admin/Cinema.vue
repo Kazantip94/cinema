@@ -3,13 +3,13 @@
       <div class="card-header text-center">
         <h3>Список кинотеатров</h3>
       </div>
-      <div v-if="cinemas" class="card-body card-group">
+      <div  class="card-body card-group">
           <CardFilms 
             v-for="cinema in cinemas"
             :key="cinema.id"
             :film="cinema"
-            @film-clicked="edit(cinema)"
-            @remove-film="remove"
+            @film-clicked="edit(cinema.uuid)"
+            @remove-film="remove(cinema)"
           />
       </div>
       <button
@@ -41,102 +41,14 @@ export default ({
     },
     methods: {
         add() {
-            const newCinema = {
-                id: `${Date.now()}${Math.random()}`,
-                title: "Новый кинотеатр",
-                titleUA: "Новий кінотеатр",
-                description: "",
-                descriptionUA: "",
-                conditions: "",
-                conditionsUA: "",
-                baseImg: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                baseImgUA: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                banner: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                bannerUA: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },               
-                img: [
-                        {
-                            id: `${Date.now()}${Math.random()}`,
-                            url: CONFIG.PICTURE_PLUG_URL,
-                        },
-                ],
-                imgUA: [
-                        {
-                            id: `${Date.now()}${Math.random()}`,
-                            url: CONFIG.PICTURE_PLUG_URL,
-                        },
-                ],
-                halls: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        hallNumber: "",
-                        date: Date.now(),
-                        description: "",
-                        descriptionUA: "",
-                        hallLayout: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        hallLayoutUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        banner: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        bannerUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        img: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                        ],
-                        imgUA: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                            ],
-                        SEO: {
-                            url: "",
-                            urlUA: "",
-                            title: "",
-                            titleUA: "",
-                            keywords: "",
-                            keywordsUA: "",
-                            description: "",
-                            descriptionUA: "",
-                        }
-                    }
-                ],
-                SEO: {
-                    url: "",
-                    urlUA: "",
-                    title: "",
-                    titleUA: "",
-                    keywords: "",
-                    keywordsUA: "",
-                    description: "",
-                    descriptionUA: "",
-                    },
-            }
-            this.cinemas.push(newCinema)
-            this.save()
+            this.$router.push({
+                name: 'cinema-edit'
+            })
         },
         async save() {
             const payload = this.cinemas
             const path = '/cinema'
-            return await this.$store.dispatch('writeToDatabase', {
-                payload,
-                path
-            })
+            return await this.$store.dispatch('writeToDatabase', {payload, path })
         },
         async remove(cinema) {
             if(!window.confirm('Удалить?')) return
@@ -144,8 +56,9 @@ export default ({
             if(cinema.img) {
                 cinema.img.forEach((item) => this.removeFromStorage(item))
             }
-            this.cinemas = this.cinemas.filter((item) => item != cinema)
-            this.save()
+            this.$store.dispatch("removeFromDatabase", {payload: cinema.uuid, path: "cinema"}).then(() => {
+            this.$delete(this.cinemas, cinema.uuid)
+            })
         },
         async removeFromStorage(picture) {
             if(picture.url == CONFIG.PICTURE_PLUG_URL) return
@@ -156,13 +69,17 @@ export default ({
                 "readFromDatabase",
                 "/cinema"
             )
-            if (result) this.cinemas = result
+            if (result) {
+                this.cinemas = result
+                for(let key in this.cinemas) {
+                    this.cinemas[key].uuid = key
+                }
+            } 
         },
-        edit(cinema) {
-            const index = this.cinemas.findIndex((item) => item == cinema)
+        edit(uuid) {
             this.$router.push({
                 name: 'cinema-edit',
-                params: { cinemaIndex: index}
+                params: { cinemaIndex: uuid}
             })
         }
     }  

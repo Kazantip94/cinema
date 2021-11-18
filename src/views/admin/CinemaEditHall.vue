@@ -315,7 +315,7 @@ export default ({
         },
         cinemaIndex: {
             type: Number,
-            required: true
+            required: true,
         }
     },
     data() {
@@ -349,8 +349,7 @@ export default ({
         },
         back() {
             this.$router.push({
-                name: "cinema-edit",
-                params: { cinemaIndex: this.cinemaIndex },
+                name: "cinema-edit"
             })
         },
         addPicture() {
