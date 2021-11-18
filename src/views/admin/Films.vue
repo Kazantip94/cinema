@@ -107,24 +107,15 @@ export default {
                     this.removeFromStorage(item)
                 )
             }
-<<<<<<< HEAD
-      this.$delete(this.films, film.uuid)
-=======
       this.$store.dispatch("removeFromDatabase", {payload: film.uuid, path: "films"}).then(() => {
             this.$delete(this.films, film.uuid)
         })
->>>>>>> ed0171f70af57ec7e352af1830b02445cf3a4229
             
     },
     async removeFromStorage(picture) {
       if (picture.url == CONFIG.PICTURE_PLUG_URL) return
       await this.$store.dispatch("removeFromStorage", picture.url)
     },
-    // async removeToDatabase() {
-    //   const payload = this.films
-    //   const path = "/films"
-    //   return await this.$store.dispatch("removeoDatabase", { payload, path })
-    // },
     async saveToDatabase() {
       const payload = this.films
       const path = "/films"

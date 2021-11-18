@@ -601,50 +601,9 @@ export default ({
             })
         },
         add() {
-            const newHall = {
-                id: `${Date.now()}${Math.random()}`,
-                hallNumber: "#",
-                date: Date.now(),
-                description: "",
-                descriptionUA: "",
-                hallLayout: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                hallLayoutUA: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                banner: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                bannerUA: {
-                    url: CONFIG.PICTURE_PLUG_URL
-                },
-                img: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        url: CONFIG.PICTURE_PLUG_URL,
-                    },
-                ],
-                imgUA: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        url: CONFIG.PICTURE_PLUG_URL,
-                    },
-                ],
-                SEO: {
-                    url: "",
-                    urlUA: "",
-                    title: "",
-                    titleUA: "",
-                    keywords: "",
-                    keywordsUA: "",
-                    description: "",
-                    descriptionUA: "",
-                }
-                    
-            }
-            this.currentCinema.halls.push(newHall)
-            this.save()
+            this.$router.push({
+                name: 'cinema-hall'
+            })
         },
         changedLogo(target) {
             this.currentCinema.baseImg.url = target.url

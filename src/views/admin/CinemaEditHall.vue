@@ -314,24 +314,65 @@ export default ({
             required: true
         },
         cinemaIndex: {
-            type: Number,
-            required: true,
+            type: String,
+            required: false,
+            default: ''
         }
     },
     data() {
         return {
-            cinema: null
+            cinema: {
+                        id: `${Date.now()}${Math.random()}`,
+                        hallNumber: "",
+                        date: Date.now(),
+                        description: "",
+                        descriptionUA: "",
+                        hallLayout: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        hallLayoutUA: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        banner: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        bannerUA: {
+                            url: CONFIG.PICTURE_PLUG_URL
+                        },
+                        img: [
+                            {
+                                id: `${Date.now()}${Math.random()}`,
+                                url: CONFIG.PICTURE_PLUG_URL,
+                            },
+                        ],
+                        imgUA: [
+                            {
+                                id: `${Date.now()}${Math.random()}`,
+                                url: CONFIG.PICTURE_PLUG_URL,
+                            },
+                            ],
+                        SEO: {
+                            url: "",
+                            urlUA: "",
+                            title: "",
+                            titleUA: "",
+                            keywords: "",
+                            keywordsUA: "",
+                            description: "",
+                            descriptionUA: "",
+                        }
+                    }
         }
     },
-    beforeRouteEnter(to, from, next) {
-        next((vm) => vm.load())
-    },
+    // beforeRouteEnter(to, from, next) {
+    //     next((vm) => vm.load())
+    // },
     methods: {
-        async load() {
-            const path = `/cinema/${this.cinemaIndex}`
-            const result = await this.$store.dispatch("readFromDatabase", path)
-            if (result) this.cinema = result
-        },
+        // async load() {
+        //     const path = `/cinema/${this.cinemaIndex}`
+        //     const result = await this.$store.dispatch("readFromDatabase", path)
+        //     if (result) this.cinema = result
+        // },
         async save() {
             const payload = this.cinema
             const path = `/cinema/${this.cinemaIndex}`
