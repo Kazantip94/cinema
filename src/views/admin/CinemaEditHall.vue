@@ -1,5 +1,5 @@
 <template>
-     <div v-if="cinema" ref="form">
+     <div ref="form">
         <div class="card">
             <div class="card-body">
                     <div class="card-header p-0 border-bottom-0">
@@ -36,7 +36,7 @@
                                         <span class="input-group-text">Номер зала</span>
                                     </div>
                                     <input
-                                        v-model="cinema.halls[hallIndex].hallNumber"
+                                        v-model="hall.hallNumber"
                                         type="text"
                                         class="form-control"
                                         placeholder="Номер зала"
@@ -47,7 +47,7 @@
                                         <span class="input-group-text">Описание зала</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.halls[hallIndex].description"
+                                    v-model="hall.description"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Описание зала"
@@ -58,7 +58,7 @@
                                     <div class="card-header">Схема зала</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.halls[hallIndex].hallLayout"
+                                        :card="hall.hallLayout"
                                         @change-card="changedHall"
                                         @remove-banner="removeHall"
                                         />
@@ -68,7 +68,7 @@
                                     <div class="card-header">Фото верхнего баннера</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.halls[hallIndex].banner"
+                                        :card="hall.banner"
                                         @change-card="changedBanner"
                                         @remove-banner="removeBanner"
                                         />
@@ -79,7 +79,7 @@
                                     <div class="card-body">
                                         <div class="card-group">
                                             <BannerUpper 
-                                            v-for="pic in cinema.halls[hallIndex].img"
+                                            v-for="pic in hall.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePicture"
@@ -101,7 +101,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.url"
+                                            v-model="hall.SEO.url"
                                             type="text" 
                                             class="form-control"
                                             placeholder="URL"
@@ -112,7 +112,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.title"
+                                            v-model="hall.SEO.title"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Title"
@@ -123,7 +123,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.keywords"
+                                            v-model="hall.SEO.keywords"
                                             type="text" 
                                             class="form-control"
                                             placeholder="keywords"
@@ -134,7 +134,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea 
-                                            v-model="cinema.halls[hallIndex].SEO.description"
+                                            v-model="hall.SEO.description"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Описание"
@@ -166,7 +166,7 @@
                                         <span class="input-group-text">Номер зала</span>
                                     </div>
                                     <input 
-                                    v-model="cinema.halls[hallIndex].hallNumber"
+                                    v-model="hall.hallNumber"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Номер зала"
@@ -177,7 +177,7 @@
                                         <span class="input-group-text">Опис</span>
                                     </div>
                                     <textarea 
-                                    v-model="cinema.halls[hallIndex].descriptionUA"
+                                    v-model="hall.descriptionUA"
                                     type="text" 
                                     class="form-control"
                                     placeholder="Опис"
@@ -188,7 +188,7 @@
                                     <div class="card-header">Схема залу</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.halls[hallIndex].hallLayoutUA"
+                                        :card="hall.hallLayoutUA"
                                         @change-card="changedHallUA"
                                         @remove-banner="removeHallUA"
                                         />
@@ -198,7 +198,7 @@
                                     <div class="card-header">Верхній банер</div>
                                     <div class="card-body">
                                         <BackBunner 
-                                        :card="cinema.halls[hallIndex].bannerUA"
+                                        :card="hall.bannerUA"
                                         @change-card="changedBannerUA"
                                         @remove-banner="removeBannerUA"
                                         />
@@ -209,7 +209,7 @@
                                     <div class="card-body">
                                         <div class="card-group">
                                             <BannerUpper 
-                                            v-for="pic in cinema.halls[hallIndex].imgUA"
+                                            v-for="pic in hall.imgUA"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePictureUA"
@@ -231,7 +231,7 @@
                                                 <span class="input-group-text">URL</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.urlUA"
+                                            v-model="hall.SEO.urlUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="URL"
@@ -242,7 +242,7 @@
                                                 <span class="input-group-text">Title</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.titleUA"
+                                            v-model="hall.SEO.titleUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Title"
@@ -253,7 +253,7 @@
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
                                             <input 
-                                            v-model="cinema.halls[hallIndex].SEO.keywordsUA"
+                                            v-model="hall.SEO.keywordsUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="keywords"
@@ -264,7 +264,7 @@
                                                 <span class="input-group-text">Description</span>
                                             </div>
                                             <textarea 
-                                            v-model="cinema.halls[hallIndex].SEO.descriptionUA"
+                                            v-model="hall.SEO.descriptionUA"
                                             type="text" 
                                             class="form-control"
                                             placeholder="Опис"
@@ -311,7 +311,7 @@ export default ({
     props: {
         hallIndex: {
             type: Number,
-            required: true
+            required: false
         },
         cinemaIndex: {
             type: String,
@@ -321,71 +321,54 @@ export default ({
     },
     data() {
         return {
-            cinema: {
+            hall: {
+                id: `${Date.now()}${Math.random()}`,
+                hallNumber: "",
+                date: Date.now(),
+                description: "",
+                descriptionUA: "",
+                hallLayout: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                hallLayoutUA: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                banner: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                bannerUA: {
+                    url: CONFIG.PICTURE_PLUG_URL
+                },
+                img: [
+                    {
                         id: `${Date.now()}${Math.random()}`,
-                        hallNumber: "",
-                        date: Date.now(),
-                        description: "",
-                        descriptionUA: "",
-                        hallLayout: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        hallLayoutUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        banner: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        bannerUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        img: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                        ],
-                        imgUA: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                            ],
-                        SEO: {
-                            url: "",
-                            urlUA: "",
-                            title: "",
-                            titleUA: "",
-                            keywords: "",
-                            keywordsUA: "",
-                            description: "",
-                            descriptionUA: "",
-                        }
-                    }
+                        url: CONFIG.PICTURE_PLUG_URL,
+                    },
+                ],
+                imgUA: [
+                    {
+                        id: `${Date.now()}${Math.random()}`,
+                        url: CONFIG.PICTURE_PLUG_URL,
+                    },
+                    ],
+                SEO: {
+                    url: "",
+                    urlUA: "",
+                    title: "",
+                    titleUA: "",
+                    keywords: "",
+                    keywordsUA: "",
+                    description: "",
+                    descriptionUA: "",
+                }
+            }
         }
     },
-    // beforeRouteEnter(to, from, next) {
-    //     next((vm) => vm.load())
-    // },
     methods: {
-        // async load() {
-        //     const path = `/cinema/${this.cinemaIndex}`
-        //     const result = await this.$store.dispatch("readFromDatabase", path)
-        //     if (result) this.cinema = result
-        // },
-        async save() {
-            const payload = this.cinema
-            const path = `/cinema/${this.cinemaIndex}`
-            return await this.$store.dispatch("writeToDatabase", {
-                payload,
-                path,
-            })
-        },
         submit() {
-            this.save()
+            this.$store.commit('setHall', this.hall)
             this.$router.push({
-                name: "cinema-edit",
-                params: { cinemaIndex: this.cinemaIndex },
+                name: "cinema-edit"
             })
         },
         back() {
@@ -394,57 +377,53 @@ export default ({
             })
         },
         addPicture() {
-            this.cinema.halls[this.hallIndex].img.push({
+            this.hall.img.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             });
         },
         addPictureUA() {
-            this.cinema.halls[this.hallIndex].imgUA.push({
+            this.hall.imgUA.push({
                 id: `${Date.now()}${Math.random()}`,
                 url: CONFIG.PICTURE_PLUG_URL,
             });
         },
         removePicture: async function (target) {
-            this.cinema.halls[this.hallIndex].img = this.cinema.halls[
-                this.hallIndex
-            ].img.filter((element) => element != target);
+            this.hall.img = this.hall.img.filter((element) => element != target);
             if (target.url == CONFIG.PICTURE_PLUG_URL) return;
             await this.$store.dispatch("removeFromStorage", target.url);
         },
         removePictureUA: async function (target) {
-            this.cinema.halls[this.hallIndex].imgUA = this.cinema.halls[
-                this.hallIndex
-            ].imgUA.filter((element) => element != target);
+            this.hall.imgUA = this.hall.imgUA.filter((element) => element != target);
             if (target.url == CONFIG.PICTURE_PLUG_URL) return;
             await this.$store.dispatch("removeFromStorage", target.url);
         },
         changedHall(target) {
-            this.cinema.halls[this.hallIndex].hallLayout.url = target.url;
+            this.hall.hallLayout.url = target.url;
         },
         changedHallUA(target) {
-            this.cinema.halls[this.hallIndex].hallLayoutUA.url = target.url;
+            this.hall.hallLayoutUA.url = target.url;
         },
         changedBanner(target) {
-            this.cinema.halls[this.hallIndex].banner.url = target.url;
+            this.hall.banner.url = target.url;
         },
         changedBannerUA(target) {
-            this.cinema.halls[this.hallIndex].bannerUA.url = target.url;
+            this.hall.bannerUA.url = target.url;
         },
         removeHall: async function () {
-            this.cinema.halls[this.hallIndex].hallLayout.url =
+            this.hall.hallLayout.url =
                 CONFIG.PICTURE_PLUG_URL;
         },
         removeHallUA: async function () {
-            this.cinema.halls[this.hallIndex].hallLayoutUA.url =
+            this.hall.hallLayoutUA.url =
                 CONFIG.PICTURE_PLUG_URL;
         },
         removeBanner: async function () {
-            this.cinema.halls[this.hallIndex].banner.url =
+            this.hall.banner.url =
                 CONFIG.PICTURE_PLUG_URL;
         },
         removeBannerUA: async function () {
-            this.cinema.halls[this.hallIndex].bannerUA.url =
+            this.hall.bannerUA.url =
                 CONFIG.PICTURE_PLUG_URL;
         },
     }

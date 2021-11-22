@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './auth'
 import db from './db'
 import info from './info'
+import hall from './hall'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     db,
-    info
+    info,
+    hall
   }
 })

@@ -465,49 +465,7 @@ export default ({
                             url: CONFIG.PICTURE_PLUG_URL,
                         },
                 ],
-                halls: [
-                    {
-                        id: `${Date.now()}${Math.random()}`,
-                        hallNumber: "",
-                        date: Date.now(),
-                        description: "",
-                        descriptionUA: "",
-                        hallLayout: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        hallLayoutUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        banner: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        bannerUA: {
-                            url: CONFIG.PICTURE_PLUG_URL
-                        },
-                        img: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                        ],
-                        imgUA: [
-                            {
-                                id: `${Date.now()}${Math.random()}`,
-                                url: CONFIG.PICTURE_PLUG_URL,
-                            },
-                            ],
-                        SEO: {
-                            url: "",
-                            urlUA: "",
-                            title: "",
-                            titleUA: "",
-                            keywords: "",
-                            keywordsUA: "",
-                            description: "",
-                            descriptionUA: "",
-                        }
-                    }
-                ],
+                halls: [],
                 SEO: {
                     url: "",
                     urlUA: "",
@@ -529,6 +487,7 @@ export default ({
                 this.currentCinema = snapshot.val()
             })
         }
+        this.currentCinema.halls = this.$store.getters['getHalls']
     },
     methods: {
         submit() {
@@ -545,6 +504,7 @@ export default ({
                     })
                 })
             }
+            this.$store.commit('clearHalls')
         },
         async updateToDatabase() {
             const payload = this.currentCinema
