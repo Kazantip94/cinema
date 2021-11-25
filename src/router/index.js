@@ -72,10 +72,11 @@ export default new Router({
       component: () => import('../views/admin/News.vue')
     },
     {
-      path: '/newsletter',
-      name: 'newsletter',
+      path: '/news-edit/:newsIndex?',
+      name: 'news-edit',
+      props: true,
       meta: {layout: 'admin'},
-      component: () => import('../views/admin/Newsletter.vue')
+      component: () => import('../views/admin/NewsEdit.vue')
     },
     {
       path: '/pages',
@@ -94,6 +95,13 @@ export default new Router({
       name: 'stock',
       meta: {layout: 'admin'},
       component: () => import('../views/admin/Stock.vue')
+    },
+    {
+      path: '/stocks-edit/:stocksIndex?',
+      name: 'stocks-edit',
+      props: true,
+      meta: {layout: 'admin'},
+      component: () => import('../views/admin/StockEdit.vue')
     },
     {
       path: '/users',

@@ -364,16 +364,40 @@ export default ({
             }
         }
     },
+
+    mounted() {
+        this.initHall();
+    },
+
     methods: {
+        initHall() {
+            if (this.hallIndex >= 0) {
+                const cinema = this.$store.getters['getCinema'];
+
+                if (Object.keys(cinema).length && cinema.halls.length) {
+                    this.hall = cinema.halls[this.hallIndex]
+                }
+            }
+        },
+
         submit() {
-            this.$store.commit('setHall', this.hall)
+            const cinema = this.$store.getters['getCinema'];
+
+            if (this.hallIndex >= 0) {
+                cinema.halls[this.hallIndex] = this.hall;
+            } else {
+                cinema.halls.push(this.hall);
+            }
+
             this.$router.push({
-                name: "cinema-edit"
+                name: "cinema-edit",
+                params: { cinemaIndex: this.cinemaIndex }
             })
         },
         back() {
             this.$router.push({
-                name: "cinema-edit"
+                name: "cinema-edit",
+                params: { cinemaIndex: this.cinemaIndex }
             })
         },
         addPicture() {

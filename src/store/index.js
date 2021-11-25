@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import auth from './auth'
 import db from './db'
 import info from './info'
-import hall from './hall'
+import cinema from './cinema';
 
 Vue.use(Vuex)
 
@@ -18,6 +18,6 @@ export default new Vuex.Store({
     auth,
     db,
     info,
-    hall
+    cinema
   }
 })

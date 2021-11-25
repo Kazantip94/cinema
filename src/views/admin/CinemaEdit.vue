@@ -5,8 +5,8 @@
                     <div class="card-header p-0 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                             <li class="nav-item">
-                                <a 
-                                href="#custom-tabs-two-ru" 
+                                <a
+                                href="#custom-tabs-two-ru"
                                 class="nav-link active"
                                 id="custom-tabs-two-ru-tab"
                                 data-toggle="pill"
@@ -16,8 +16,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a 
-                                href="#custom-tabs-two-ua" 
+                                <a
+                                href="#custom-tabs-two-ua"
                                 class="nav-link"
                                 id="custom-tabs-two-ua-tab"
                                 data-toggle="pill"
@@ -46,9 +46,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Описание</span>
                                     </div>
-                                    <textarea 
+                                    <textarea
                                     v-model="currentCinema.description"
-                                    type="text" 
+                                    type="text"
                                     class="form-control"
                                     placeholder="Описание"
                                     >
@@ -58,9 +58,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Условия</span>
                                     </div>
-                                    <textarea 
+                                    <textarea
                                     v-model="currentCinema.conditions"
-                                    type="text" 
+                                    type="text"
                                     class="form-control"
                                     placeholder="Описание"
                                     >
@@ -69,17 +69,17 @@
                                 <div class="card">
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
-                                        <BackBunner 
+                                        <BackBunner
                                         :card="currentCinema.baseImg"
                                         @change-card="changedLogo"
                                         @remove-banner="removeLogo"
                                         />
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">Фото верхнего баннера</div>
                                     <div class="card-body">
-                                        <BackBunner 
+                                        <BackBunner
                                         :card="currentCinema.banner"
                                         @change-card="changedBanner"
                                         @remove-banner="removeBanner"
@@ -90,14 +90,14 @@
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <BannerUpper 
+                                            <BannerUpper
                                             v-for="pic in currentCinema.img"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePicture"
                                             />
                                         </div>
-                                        <button 
+                                        <button
                                         class="btn btn-outline-info btn-block my-2"
                                         @click.prevent="addPicture"
                                         >
@@ -121,14 +121,14 @@
                                             <tbody>
                                                 <tr
                                                 v-for="(hall, index) in currentCinema.halls"
-                                                :key="hall.id"
+                                                :key="index"
                                                 >
                                                     <td>{{ hall.hallNumber }}</td>
                                                     <td>{{ new Date(hall.date).toLocaleDateString() }}</td>
                                                     <td>
                                                         <button
                                                         class="btn btn-info mx-3"
-                                                        @click="edit(index)"
+                                                        @click="editHall(index)"
                                                         >
                                                             <i class="fas fa-edit"></i>
                                                         </button>
@@ -142,7 +142,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button 
+                                        <button
                                         class="btn btn-outline-info btn-block"
                                         type="button"
                                         @click="add"
@@ -158,9 +158,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.url"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="URL"
                                             >
@@ -169,9 +169,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Title</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.title"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="Title"
                                             >
@@ -180,9 +180,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.keywords"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="keywords"
                                             >
@@ -191,9 +191,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Description</span>
                                             </div>
-                                            <textarea 
+                                            <textarea
                                             v-model="currentCinema.SEO.description"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="Описание"
                                             >
@@ -223,9 +223,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Назва</span>
                                     </div>
-                                    <input 
+                                    <input
                                     v-model="currentCinema.titleUA"
-                                    type="text" 
+                                    type="text"
                                     class="form-control"
                                     placeholder="Назва"
                                     >
@@ -234,9 +234,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Опис</span>
                                     </div>
-                                    <textarea 
+                                    <textarea
                                     v-model="currentCinema.descriptionUA"
-                                    type="text" 
+                                    type="text"
                                     class="form-control"
                                     placeholder="Опис"
                                     >
@@ -246,9 +246,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Умови</span>
                                     </div>
-                                    <textarea 
+                                    <textarea
                                     v-model="currentCinema.conditionsUA"
-                                    type="text" 
+                                    type="text"
                                     class="form-control"
                                     placeholder="Опис"
                                     >
@@ -257,7 +257,7 @@
                                 <div class="card">
                                     <div class="card-header">Логотип</div>
                                     <div class="card-body">
-                                        <BackBunner 
+                                        <BackBunner
                                         :card="currentCinema.baseImgUA"
                                         @change-card="changedLogoUA"
                                         @remove-banner="removeLogoUA"
@@ -267,7 +267,7 @@
                                 <div class="card">
                                     <div class="card-header">Фото верхнього банера</div>
                                     <div class="card-body">
-                                        <BackBunner 
+                                        <BackBunner
                                         :card="currentCinema.bannerUA"
                                         @change-card="changedBannerUA"
                                         @remove-banner="removeBannerUA"
@@ -278,14 +278,14 @@
                                     <div class="card-header">Галерея картинок</div>
                                     <div class="card-body">
                                         <div class="card-group">
-                                            <BannerUpper 
+                                            <BannerUpper
                                             v-for="pic in currentCinema.imgUA"
                                             :key="pic.id"
                                             :card="pic"
                                             @remove-card="removePictureUA"
                                             />
                                         </div>
-                                        <button 
+                                        <button
                                         class="btn btn-outline-info btn-block my-2"
                                         @click.prevent="addPictureUA"
                                         >
@@ -316,7 +316,7 @@
                                                     <td>
                                                         <button
                                                         class="btn btn-info mx-3"
-                                                        @click="edit(index)"
+                                                        @click="editHall(index)"
                                                         >
                                                             <i class="fas fa-edit"></i>
                                                         </button>
@@ -330,7 +330,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button 
+                                        <button
                                         class="btn btn-outline-info btn-block"
                                         type="button"
                                         @click="add"
@@ -346,9 +346,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">URL</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.urlUA"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="URL"
                                             >
@@ -357,9 +357,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Title</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.titleUA"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="Title"
                                             >
@@ -368,9 +368,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Keywords</span>
                                             </div>
-                                            <input 
+                                            <input
                                             v-model="currentCinema.SEO.keywordsUA"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="keywords"
                                             >
@@ -379,9 +379,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Description</span>
                                             </div>
-                                            <textarea 
+                                            <textarea
                                             v-model="currentCinema.SEO.descriptionUA"
-                                            type="text" 
+                                            type="text"
                                             class="form-control"
                                             placeholder="Опис"
                                             >
@@ -452,7 +452,7 @@ export default ({
                 },
                 bannerUA: {
                     url: CONFIG.PICTURE_PLUG_URL
-                },               
+                },
                 img: [
                         {
                             id: `${Date.now()}${Math.random()}`,
@@ -460,10 +460,10 @@ export default ({
                         },
                 ],
                 imgUA: [
-                        {
-                            id: `${Date.now()}${Math.random()}`,
-                            url: CONFIG.PICTURE_PLUG_URL,
-                        },
+                    {
+                        id: `${Date.now()}${Math.random()}`,
+                        url: CONFIG.PICTURE_PLUG_URL,
+                    },
                 ],
                 halls: [],
                 SEO: {
@@ -475,23 +475,43 @@ export default ({
                     keywordsUA: "",
                     description: "",
                     descriptionUA: "",
-                    },
+                },
             }
         }
     },
     async mounted() {
-        if(this.cinemaIndex) {
-            const cinema = await this.getById()
-
-            cinema.on('value', snapshot => {
-                this.currentCinema = snapshot.val()
-            })
-        }
-        this.currentCinema.halls = this.$store.getters['getHalls']
+        this.initCinema();
     },
     methods: {
+        async initCinema() {
+            const cinema = this.$store.getters['getCinema'];
+
+            if (!Object.keys(cinema).length && this.cinemaIndex) {
+                const cinema = await this.getById()
+
+                cinema.on('value', snapshot => {
+                    this.currentCinema = snapshot.val()
+
+                    this.$store.commit('setCinema', this.currentCinema)
+                })
+
+                return;
+            }
+
+            if (Object.keys(cinema).length) {
+                this.currentCinema = cinema
+
+                // @TODO check if needed
+                this.$store.commit('setCinema', this.currentCinema)
+
+                return;
+            }
+
+            this.$store.commit('setCinema', this.currentCinema)
+        },
+
         submit() {
-            if(this.cinemaIndex) {
+            if (this.cinemaIndex) {
                 this.updateToDatabase().then(() => {
                     this.$router.push({
                         name: "cinema"
@@ -504,7 +524,8 @@ export default ({
                     })
                 })
             }
-            this.$store.commit('clearHalls')
+
+            this.$store.commit('clearCinema')
         },
         async updateToDatabase() {
             const payload = this.currentCinema
@@ -553,8 +574,7 @@ export default ({
             if (picture.url == CONFIG.PICTURE_PLUG_URL) return
             await this.$store.dispatch("removeFromStorage", picture.url)
         },
-        edit(index) {
-            this.save()
+        editHall(index) {
             this.$router.push({
                 name: "cinema-hall",
                 params: { cinemaIndex: this.cinemaIndex, hallIndex: index },
@@ -562,7 +582,8 @@ export default ({
         },
         add() {
             this.$router.push({
-                name: 'cinema-hall'
+                name: 'cinema-hall',
+                params: { cinemaIndex: this.cinemaIndex },
             })
         },
         changedLogo(target) {
@@ -617,10 +638,10 @@ export default ({
         },
         back() {
             this.$router.push({
-                name: "cinema" 
+                name: "cinema"
             })
         }
     }
-    
+
 })
 </script>

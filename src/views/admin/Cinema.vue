@@ -5,8 +5,8 @@
       </div>
       <div  class="card-body card-group">
           <CardFilms 
-            v-for="cinema in cinemas"
-            :key="cinema.id"
+            v-for="(cinema, index) in cinemas"
+            :key="index"
             :film="cinema"
             @film-clicked="edit(cinema.uuid)"
             @remove-film="remove(cinema)"
